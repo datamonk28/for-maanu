@@ -13,43 +13,117 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: white;
   background: #0b1026;
+  overflow-x: hidden;
 }
 
-/* ===== PASSWORD SCREEN ===== */
+/* ===== PASSWORD SCREEN (NEW DESIGN) ===== */
 #passwordOverlay {
   position: fixed;
   inset: 0;
-  background: #0b1026;
+  background: linear-gradient(45deg, #0b1026, #1b2347, #0b1026);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  padding: 20px;
+  overflow: hidden;
 }
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: float linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
 .pass-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.pass-card input {
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
+  position: relative;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 40px 30px;
+  border-radius: 30px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
   width: 100%;
-  margin-top: 15px;
+  max-width: 350px;
+  text-align: center;
+  animation: fadeInScale 0.8s ease-out;
+  z-index: 101;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.pass-card h2 {
+  font-size: 1.6rem;
+  margin: 0 0 10px;
+  background: linear-gradient(to right, #fff, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pass-card p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 25px;
+}
+
+.pass-card input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 14px;
+  border-radius: 12px;
+  width: 100%;
+  color: white;
   text-align: center;
   font-size: 1.2rem;
+  outline: none;
+  transition: all 0.3s;
+  letter-spacing: 5px;
 }
+
+.pass-card input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
 .pass-card button {
-  margin-top: 15px;
-  padding: 10px 25px;
-  border-radius: 8px;
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
   border: none;
-  background: #f6d365;
+  background: linear-gradient(135deg, #ffd700, #f6d365);
+  color: #0b1026;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.pass-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
 }
 
 /* ===== INTRO ===== */
@@ -57,15 +131,16 @@ body {
   position: fixed;
   inset: 0;
   background: url("canva1.png") center/cover no-repeat;
-  display: none; /* Changed to none, JS will show it */
+  display: none;
   align-items: center;
   justify-content: center;
+  z-index: 50;
 }
 .intro::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.45);
+  background: rgba(0,0,0,.5);
 }
 .intro-card {
   position: relative;
@@ -74,197 +149,80 @@ body {
   padding: 24px;
   max-width: 420px;
 }
-.intro-card h1 { font-weight: 500; margin-bottom: 12px; }
-.intro-card p { opacity: .9; line-height: 1.6; }
 .intro-card button {
   margin-top: 24px;
-  padding: 12px 26px;
+  padding: 12px 30px;
   border-radius: 24px;
   border: none;
   background: white;
   color: #111;
-  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* ===== STORY PAGE ===== */
 .story-page {
   display: none;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(255,215,150,.12), transparent 40%),
-    linear-gradient(180deg, #0b1026, #1b2347);
+  background: radial-gradient(circle at top, rgba(255,215,150,.12), transparent 40%), #0b1026;
 }
-.story-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(#ffd27d 1px, transparent 1px),
-    radial-gradient(#ffd27d 1px, transparent 1px);
-  background-size: 120px 120px, 200px 200px;
-  background-position: 0 0, 60px 60px;
-  opacity: .2;
-  pointer-events: none;
-}
-.overlay { padding: 28px 16px 40px; }
-h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
+.overlay { padding: 40px 16px; }
+h2 { text-align: center; font-weight: 500; margin-bottom: 30px; }
 
 .container {
   max-width: 900px;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 .box {
-  padding: 22px;
-  border-radius: 18px;
-  background: rgba(255,255,255,.18);
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
   backdrop-filter: blur(14px);
-  box-shadow: 0 15px 30px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
+  transition: transform 0.3s;
 }
-.box h3 { margin: 0 0 6px; font-weight: 500; }
-.line {
-  width: 40px;
-  height: 2px;
-  background: rgba(255,215,150,.8);
-  margin-bottom: 12px;
-}
-.box p { opacity: .85; margin: 0; }
+.box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.12); }
+.line { width: 40px; height: 2px; background: #ffd700; margin-bottom: 12px; }
 
 .curious-btn {
-  margin-top: 40px;
-  padding: 14px 32px;
+  margin-top: 50px;
+  padding: 16px 40px;
   border-radius: 30px;
   border: none;
-  font-size: 1.05rem;
+  font-weight: 600;
   background: linear-gradient(135deg, #f6d365, #fda085);
   color: #1a1a1a;
   cursor: pointer;
 }
-.curious-btn.disabled {
-  opacity: .4;
-  cursor: not-allowed;
-  background: linear-gradient(135deg, #999, #777);
-}
+.curious-btn.disabled { opacity: .3; cursor: not-allowed; filter: grayscale(1); }
 
 /* ===== FULL STORY OVERLAY ===== */
-.full {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 10;
-}
-.full-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: blur(4px);
-}
-.full-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.6);
-}
+.full { position: fixed; inset: 0; display: none; z-index: 200; }
+.full-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(8px); }
+.full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); }
 .full-card {
   position: relative;
-  max-width: 760px;
-  margin: 40px auto;
-  padding: 28px 24px 40px;
-  border-radius: 22px;
-  background: rgba(10,12,25,.9);
-  max-height: 80vh;
-  overflow-y: auto;
-}
-.close {
-  position: sticky;
-  top: 0;
-  margin-left: auto;
-  display: block;
-  padding: 10px 18px;
-  border-radius: 22px;
-  border: none;
-  background: white;
-  color: #111;
-  cursor: pointer;
-}
-.full-card p {
-  line-height: 1.8;
-  font-size: 1.05rem;
-}
-.signature {
-  margin-top: 40px;
-  opacity: .8;
-  font-style: italic;
-  text-align: right;
-}
-
-.highlight-yellow { color: #FFD700; font-weight: 500; }
-.question-yellow { color: #FFD700; font-weight: 500; }
-
-/* ===== FINAL SHEET ===== */
-.final-sheet {
-  position: fixed;
-  inset: 0;
-  display: none;
-  background: #9b4a1f;
-  color: white;
-  z-index: 20;
-}
-.final-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 32px;
-  text-align: center;
-}
-.final-content h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
-.final-content .small { margin: 20px 0; font-size: 1.05rem; }
-.final-content .gift-btn {
-    padding: 15px 30px;
-    background: white;
-    color: #9b4a1f;
-    border: none;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-/* ===== LAST MEMORY PAGE (NEW) ===== */
-.last-page {
-  position: fixed;
-  inset: 0;
-  display: none;
-  background: #000;
-  z-index: 30;
-  overflow-y: auto;
-  text-align: center;
-  padding: 40px 20px;
-}
-.girl-image {
-  width: 280px;
-  height: 380px;
-  object-fit: cover;
-  border-radius: 150px 150px 20px 20px; /* Aesthetic curve */
-  border: 4px solid rgba(255,255,255,0.2);
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-.poem-container {
-  max-width: 500px;
-  margin: 0 auto;
-  font-style: italic;
-  line-height: 2;
-  color: #ffd700;
-  font-size: 1.1rem;
-  background: rgba(255,255,255,0.05);
+  max-width: 600px;
+  margin: 5vh auto;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 25px;
+  background: rgba(15, 20, 40, 0.95);
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255,255,255,0.1);
 }
+.close { float: right; padding: 8px 16px; border-radius: 15px; border: none; background: white; cursor: pointer; }
+
+/* ===== FINAL SHEET & LAST PAGE ===== */
+.final-sheet { position: fixed; inset: 0; display: none; background: #9b4a1f; z-index: 300; }
+.final-content { height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 30px; text-align: center; }
+.last-page { position: fixed; inset: 0; display: none; background: #000; z-index: 400; overflow-y: auto; padding: 50px 20px; text-align: center; }
+.girl-image { width: 260px; height: 360px; object-fit: cover; border-radius: 130px 130px 20px 20px; border: 3px solid #ffd700; margin-bottom: 30px; }
+.poem-container { max-width: 500px; margin: 0 auto; line-height: 2; color: #ffd700; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; }
 
 </style>
 </head>
@@ -273,22 +231,17 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
 
 <div id="passwordOverlay">
   <div class="pass-card">
-    <h2>Enter Secret Key</h2>
-    <p>Only for Maanuu's eyes.</p>
-    <input type="password" id="passInput" placeholder="Password here...">
-    <br>
-    <button onclick="checkPassword()">Unlock</button>
+    <h2>Secret Key</h2>
+    <p>Only for Maanuu's eyes 🤍</p>
+    <input type="password" id="passInput" placeholder="••••" autofocus>
+    <button onclick="checkPassword()">Unlock Story</button>
   </div>
 </div>
 
 <div class="intro" id="intro">
   <div class="intro-card">
     <h1>Hey Maanuu 🤍</h1>
-    <p>
-      Ek kahani sunegi kya?<br>
-      Nothing dramatic.<br>
-      Just something I wanted to share.
-    </p>
+    <p>Ek kahani sunegi kya?<br>Nothing dramatic. Just something I wanted to share.</p>
     <button onclick="enterStory()">Continue</button>
   </div>
 </div>
@@ -296,7 +249,6 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
 <div class="story-page" id="storyPage">
   <div class="overlay">
     <h2>A Small Story 🤍</h2>
-
     <div class="container">
       <div class="box" onclick="openStory(0)">
         <h3>The Beginning</h3><div class="line"></div>
@@ -311,11 +263,8 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
         <p>Some feelings don’t need effort.</p>
       </div>
     </div>
-
     <div style="text-align:center;">
-      <button id="curiousBtn" class="curious-btn disabled" disabled>
-        Just curious??
-      </button>
+      <button id="curiousBtn" class="curious-btn disabled" disabled>Just curious??</button>
     </div>
   </div>
 </div>
@@ -324,70 +273,59 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   <div class="full-bg" id="fullBg"></div>
   <div class="full-overlay"></div>
   <div class="full-card">
-    <button class="close" onclick="closeStory()">Close</button>
-    <div id="fullText"></div>
-    <div class="signature">— from a wrong number</div>
+    <button class="close" onclick="closeStory()">✕ Close</button>
+    <div id="fullText" style="margin-top:40px;"></div>
+    <div style="margin-top:30px; opacity:0.6; font-style:italic; text-align:right;">— from a wrong number</div>
   </div>
 </div>
 
 <div class="final-sheet" id="finalSheet">
   <div class="final-content">
-    <h1>THERE IS NO MORAL HERE</h1>
-    <h1>IT WAS JUST A STORY</h1>
-
-    <div class="small">
-      and I was curious to know what will happen next but I woke up 😂
-    </div>
-
-    <div style="font-size: 1.2rem; font-weight: 700;">
-      LEAVE THIS STORY HERE<br>
-      HOWEVER PLEASE ACCEPT MY SMALL GIFT 🎁
-    </div>
-    
-    <button class="gift-btn" onclick="showLastPage()">Thank You Kutty!💝</button>
-
-    <div style="margin-top: 20px; font-style: italic; opacity: 0.8;">from a wrong number</div>
+    <h1 style="font-size:2rem;">THERE IS NO MORAL</h1>
+    <p>...and I was curious to know what happens next but I woke up 😂</p>
+    <p style="font-weight:bold; margin: 20px 0;">PLEASE ACCEPT MY SMALL GIFT 🎁</p>
+    <button style="padding:15px 30px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;" onclick="showLastPage()">Thank You Kutty! 💝</button>
   </div>
 </div>
 
 <div class="last-page" id="lastPage">
   <img src="myfavy.jpeg" alt="Maanuu" class="girl-image">
-  
-<div class="poem-container">
-  <p>
-    हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>
-    परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।
-  </p>
-  <p>
-    तू मेरी दुनिया की वो ख़ामोश, सबसे हसीं दुआ हुई,<br>
-    लबों पे नाम न आ सका, मगर असर में तू सदा रहा करे।
-  </p>
-  <p>
-    नसीब में नहीं वो सितारा, जो ख़्वाबों की मंज़िल था कभी,<br>
-    चुन ली ज़मीं की राहत मैंने, अब सर झुका-झुका रहा करे।
-  </p>
-  <p>
-    हसरत भरी इन आँखों से तुझे तकना है इबादत मेरी,<br>
-    जैसे कोई मासूम बच्चा, किसी चाँद की ओर रहा करे।
-  </p>
-  <p>
-    ख़्वाहिश ने कभी कुछ माँगा नहीं, बस दीदार ही मंज़ूर है,<br>
-    तुझे दूर से ही देखते रहना, मेरी मुकम्मल वफ़ा रहा करे।
-  </p>
-  <p style="color:white; font-size: 0.9rem; margin-top: 20px;">— for you, Maanuu</p>
+  <div class="poem-container">
+    <p>हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।</p>
+    <p>तू मेरी दुनिया की वो ख़ामोश, सबसे हसीं दुआ हुई,<br>लबों पे नाम न आ सका, मगर असर में तू सदा रहा करे।</p>
+    <p>नसीब में नहीं वो सितारा, जो ख़्वाबों की मंज़िल था कभी,<br>चुन ली ज़मीं की राहत मैंने, अब सर झुका-झुका रहा करे।</p>
+    <p>हसरत भरी इन आँखों से तुझे तकना है इबादत मेरी,<br>जैसे कोई मासूम बच्चा, किसी चाँद की ओर रहा करे।</p>
+    <p>ख़्वाहिश ने कभी कुछ माँगा नहीं, बस दीदार ही मंज़ूर है,<br>तुझे दूर से ही देखते रहना, मेरी मुकम्मल वफ़ा रहा करे।</p>
+    <p style="color:white; font-size: 0.9rem; margin-top: 20px; opacity:0.8;">— for you, Maanuu</p>
+  </div>
 </div>
 
 <script>
+// --- Star Background Logic ---
+function createStars() {
+  const container = document.getElementById('passwordOverlay');
+  for (let i = 0; i < 50; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 'px';
+    star.style.width = size; star.style.height = size;
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDuration = (Math.random() * 8 + 4) + 's';
+    star.style.animationDelay = Math.random() * 5 + 's';
+    container.appendChild(star);
+  }
+}
+window.onload = createStars;
+
 // --- Password Logic ---
 function checkPassword() {
   const pass = document.getElementById("passInput").value;
-  const correctPass = "1234"; // <--- CHANGE PASSWORD HERE
-
-  if (pass === correctPass) {
+  if (pass === "1234") { // <--- YOUR PASSWORD
     document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
   } else {
-    alert("Incorrect password. Hint: Check the date or something common!");
+    alert("Oops! Not that one. Try again! ✨");
   }
 }
 
@@ -397,95 +335,25 @@ function enterStory() {
 }
 
 const stories = [
-  {
-    bg: "manu.png",
-    html: `
-      <p>
-        They didn’t share a common language, yet their hearts somehow understood each other.
-        The boy found a true friend in her and offered a small gift (to his treasure),
-        knowing she wasn’t fond of such gestures.
-        It wasn’t a mistake—it was his way of saying thank you.
-        If the girl felt it wasn’t right for her, she had every right to reject it 😅
-      </p>
-    `
-  },
-  {
-    bg: "chatgpt.png",
-    html: `
-      <p>
-        A boy calls his girl the moon, wondering if he could ever reach her —
-        then the engineer inside him smiles and says,
-        no worries, I’ll build a rocket.
-      </p>
-
-      <p>
-        <span class="highlight-yellow">Funny right Maanuu</span>
-      </p>
-
-      <p>
-        Do you really think that this boy prioritise that girl
-        or is this just a fancy line to impress?
-      </p>
-    `
-  },
-  {
-    bg: "canva2.jpg",
-    html: `
-      <p><span class="question-yellow">When I shared this thought with the boy, he said:</span></p>
-
-      <p>“Why should I try to impress her? I’m already impressed by her for no reason.”</p>
-
-      <p><span class="question-yellow">I checked with him what did you like?</span></p>
-
-      <p>
-        He laughed and said it was her cuteness —
-        how it shows in her innocence, her anger, her pain, her smile,
-        her emotions, her strictness, her rejection, and her acceptance.
-      </p>
-
-      <p><span class="question-yellow">I asked again, “Don’t you want her to love you?”</span></p>
-
-      <p>
-        He replied,
-        “Pure love never forces anyone to love, nor does it beg for it.”
-      </p>
-
-      <p><span class="question-yellow">So I asked, “Then what is the point of all this?”</span></p>
-
-      <p>
-        He smiled gently and said,
-        “So that I never regret in the future for having missed such a divine soul.”
-      </p>
-    `
-  }
+  { bg: "manu.png", html: `<p>They didn’t share a common language, yet their hearts understood each other. The boy offered a small gift, knowing she wasn’t fond of gestures. It was his way of saying thank you.</p>` },
+  { bg: "chatgpt.png", html: `<p>A boy calls his girl the moon, wondering if he could ever reach her. The engineer inside him smiles and says: "No worries, I'll build a rocket." <br><br> <span style="color:#ffd700">Funny right?</span></p>` },
+  { bg: "canva2.jpg", html: `<p>I asked him, "Don't you want her to love you?"<br><br>He replied, "Pure love never forces anyone. I just don't want to regret missing such a divine soul."</p>` }
 ];
 
-
 const opened = new Set();
-
 function openStory(i){
   opened.add(i);
   document.getElementById("fullBg").style.backgroundImage = `url(${stories[i].bg})`;
   document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
-  if (opened.size === 3) unlockCurious();
+  if (opened.size === 3) {
+    const btn = document.getElementById("curiousBtn");
+    btn.disabled = false; btn.classList.remove("disabled");
+    btn.onclick = () => document.getElementById("finalSheet").style.display = "block";
+  }
 }
 
-function closeStory(){
-  document.getElementById("full").style.display = "none";
-}
-
-function unlockCurious() {
-  const btn = document.getElementById("curiousBtn");
-  btn.disabled = false;
-  btn.classList.remove("disabled");
-  btn.onclick = openFinal;
-}
-
-function openFinal() {
-  document.getElementById("finalSheet").style.display = "block";
-}
-
+function closeStory(){ document.getElementById("full").style.display = "none"; }
 function showLastPage() {
   document.getElementById("finalSheet").style.display = "none";
   document.getElementById("lastPage").style.display = "block";
