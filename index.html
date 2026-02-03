@@ -13,13 +13,16 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: white;
   background: #0b1026;
-  overflow-x: hidden;
+  overflow: hidden; /* Prevents scrolling between hidden layers */
 }
 
-/* ===== BACKGROUND & STARS ===== */
 .template-bg {
   background: radial-gradient(circle at center, #1b2347 0%, #0b1026 100%);
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: -1;
 }
 
 .star {
@@ -29,6 +32,7 @@ body {
   opacity: 0.4;
   pointer-events: none;
   animation: float linear infinite;
+  z-index: 0;
 }
 
 @keyframes float {
@@ -36,7 +40,7 @@ body {
   to { transform: translateY(-10vh); }
 }
 
-/* ===== 1. REDESIGNED LOGIN SCREEN ===== */
+/* ===== LOGIN ===== */
 #passwordOverlay {
   position: fixed;
   inset: 0;
@@ -58,15 +62,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 40px;
   text-align: center;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
   z-index: 9001;
-}
-
-.pass-card h2 {
-  font-family: 'Georgia', serif;
-  font-size: 1.8rem;
-  color: #ffd700;
-  margin: 0 0 10px;
 }
 
 .pass-card input {
@@ -81,12 +77,6 @@ body {
   letter-spacing: 8px;
   outline: none;
   margin-top: 20px;
-  transition: 0.3s;
-}
-
-.pass-card input:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
 .pass-card button {
@@ -99,10 +89,9 @@ body {
   color: #0b1026;
   font-weight: 800;
   cursor: pointer;
-  text-transform: uppercase;
 }
 
-/* ===== 2. INTRO & STORY GRID ===== */
+/* ===== INTRO ===== */
 .intro {
   position: fixed;
   inset: 0;
@@ -110,11 +99,19 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 8000;
 }
 .intro::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
 
-.story-page { display: none; min-height: 100vh; padding: 60px 20px; position: relative; }
+/* ===== STORY PAGE ===== */
+.story-page {
+  display: none;
+  height: 100vh;
+  padding: 60px 20px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+}
 
 .container {
   max-width: 900px;
@@ -131,13 +128,12 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .line { width: 40px; height: 2px; background: #ffd700; margin-bottom: 12px; }
 
-/* ===== 3. MODAL & FINAL SHEET ===== */
-.full { position: fixed; inset: 0; display: none; z-index: 2000; }
+/* ===== POPUPS ===== */
+.full { position: fixed; inset: 0; display: none; z-index: 10000; }
 .full-bg { position: absolute; inset: 0; background-size: cover; filter: blur(15px); }
 .full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); }
 .full-card {
@@ -155,7 +151,7 @@ body {
   inset: 0;
   display: none;
   backdrop-filter: blur(15px);
-  z-index: 3000;
+  z-index: 11000;
   align-items: center;
   justify-content: center;
 }
@@ -168,19 +164,19 @@ body {
   max-width: 400px;
   border-radius: 15px;
   text-align: center;
-  transform: rotate(-1deg);
   box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
-/* ===== 4. FINAL POEM PAGE ===== */
+/* ===== FINAL POEM PAGE ===== */
 .last-page {
   position: fixed;
   inset: 0;
   display: none;
-  z-index: 4000;
+  z-index: 12000; /* Highest priority at the end */
   overflow-y: auto;
   text-align: center;
   padding: 60px 20px;
+  background: radial-gradient(circle at center, #1b2347 0%, #0b1026 100%);
 }
 
 .poem-card {
@@ -209,10 +205,10 @@ body {
   color: #f0e68c;
 }
 
-/* CONTROLS */
+/* UI BUTTONS */
 .music-control {
   position: fixed;
-  bottom: 20px; right: 20px; z-index: 9999;
+  bottom: 20px; right: 20px; z-index: 20000;
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
   color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
   display: none; align-items: center; justify-content: center;
@@ -224,31 +220,33 @@ body {
 }
 .curious-btn.disabled { opacity: 0.2; cursor: not-allowed; }
 
-.heart-flare { position: absolute; color: #ff4d4d; animation: heartFloat 2s ease-out forwards; pointer-events: none; z-index: 10000;}
+.heart-flare { position: absolute; color: #ff4d4d; animation: heartFloat 2s ease-out forwards; pointer-events: none; z-index: 21000;}
 @keyframes heartFloat { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100px); opacity: 0; } }
 </style>
 </head>
 
-<body class="template-bg">
+<body>
+
+<div class="template-bg"></div>
+<div id="starContainer"></div>
 
 <audio id="bgMusic" loop>
   <source src="mysong.mp3" type="audio/mpeg">
 </audio>
 
 <button class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</button>
-<div id="starContainer"></div>
 
 <div id="passwordOverlay">
   <div class="pass-card">
-    <h2>Secret Key</h2>
-    <p>Only for Maanuu's eyes 🤍</p>
+    <h2 style="font-family: Georgia;">Secret Key</h2>
+    <p style="opacity: 0.7;">Only for Maanuu's eyes 🤍</p>
     <input type="password" id="passInput" placeholder="••••" autofocus>
     <button onclick="checkPassword()">Unlock Story</button>
   </div>
 </div>
 
 <div class="intro" id="intro">
-  <div style="text-align:center; padding: 20px; position: relative; z-index: 1;">
+  <div style="text-align:center; padding: 20px; z-index: 1;">
     <h1>Hey Maanuu 🤍</h1>
     <p>Ek kahani sunegi kya?</p>
     <button onclick="enterStory()" style="padding:15px 40px; border-radius:30px; border:none; cursor:pointer; font-weight:bold;">Continue</button>
@@ -302,7 +300,6 @@ body {
 </div>
 
 <script>
-// Star Generation
 function createStars() {
   const container = document.getElementById('starContainer');
   for (let i = 0; i < 60; i++) {
@@ -318,24 +315,23 @@ function createStars() {
 }
 window.onload = createStars;
 
-// Password
 function checkPassword() {
-  const input = document.getElementById("passInput").value;
-  if (input === "1234") {
+  if (document.getElementById("passInput").value === "1234") {
     document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
   } else { alert("Not the magic word! ✨"); }
 }
 
-// Start Story & Set Volume
 function enterStory() {
   const music = document.getElementById("bgMusic");
-  music.volume = 0.3; // 30% Volume
+  music.volume = 0.3; 
   music.play().catch(() => {});
   
   document.getElementById("musicBtn").style.display = "flex";
   document.getElementById("intro").style.display = "none";
   document.getElementById("storyPage").style.display = "block";
+  // Explicitly hide lastPage in case it's bugged
+  document.getElementById("lastPage").style.display = "none"; 
 }
 
 function toggleMusic() {
@@ -365,12 +361,13 @@ function openStory(i) {
 }
 
 function closeStory() { document.getElementById("full").style.display = "none"; }
+
 function showLastPage() {
   document.getElementById("finalSheet").style.display = "none";
+  document.getElementById("storyPage").style.display = "none"; // Hide previous page
   document.getElementById("lastPage").style.display = "block";
 }
 
-// Interactive Hearts
 document.getElementById('poemBox').addEventListener('click', function(e) {
     const heart = document.createElement('div');
     heart.innerHTML = '❤️'; heart.className = 'heart-flare';
