@@ -109,13 +109,26 @@ h2 {
 }
 
 .box h3 { margin: 0 0 6px; font-weight: 500; }
+
 .line {
   width: 40px;
   height: 2px;
   background: rgba(255,215,150,.8);
   margin-bottom: 12px;
 }
+
 .box p { opacity: .85; margin: 0; }
+
+/* Curious button */
+.curious-btn {
+  margin-top: 40px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  color: #1a1a1a;
+}
 
 /* ===== FULL STORY VIEW ===== */
 .full {
@@ -136,7 +149,7 @@ h2 {
 .full-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.6);
 }
 
 .full-card {
@@ -145,7 +158,7 @@ h2 {
   margin: 40px auto;
   padding: 28px 24px 40px;
   border-radius: 22px;
-  background: rgba(10,12,25,.85);
+  background: rgba(10,12,25,.9);
   overflow-y: auto;
 }
 
@@ -160,11 +173,57 @@ h2 {
   background: white;
   color: #111;
 }
+
+.full-card p {
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
 .signature {
   margin-top: 40px;
   opacity: .8;
   font-style: italic;
   text-align: right;
+}
+
+/* ===== FINAL SHEET ===== */
+.final-sheet {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: #9b4a1f;
+  color: white;
+  z-index: 20;
+}
+
+.final-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+}
+
+.final-content h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.final-content .small {
+  margin: 20px 0;
+  font-size: 1.05rem;
+}
+
+.final-content .leave {
+  margin-top: 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.final-content .sign {
+  margin-top: 12px;
+  font-style: italic;
 }
 </style>
 </head>
@@ -176,8 +235,8 @@ h2 {
   <div class="intro-card">
     <h1>Hey Maanuu 🤍</h1>
     <p>
-      Ek kahani sunegi kya?  
-      Nothing dramatic.  
+      Ek kahani sunegi kya?<br>
+      Nothing dramatic.<br>
       Just something I wanted to share.
     </p>
     <button onclick="enterStory()">Continue</button>
@@ -191,20 +250,21 @@ h2 {
 
     <div class="container">
       <div class="box" onclick="openStory(0)">
-        <h3>The Beginning</h3><div class="line"></div><p>Two hearts, quietly understanding each other…</p>
+        <h3>The Beginning</h3><div class="line"></div>
+        <p>Two hearts, quietly understanding each other…</p>
       </div>
       <div class="box" onclick="openStory(1)">
-        <h3>The Moon Thought</h3><div class="line"></div><p>Is it poetry, or something honest?</p>
+        <h3>The Moon Thought</h3><div class="line"></div>
+        <p>Is it poetry, or something honest?</p>
       </div>
       <div class="box" onclick="openStory(2)">
-        <h3>No Impressing</h3><div class="line"></div><p>Some feelings don’t need effort.</p>
+        <h3>No Impressing</h3><div class="line"></div>
+        <p>Some feelings don’t need effort.</p>
       </div>
-      <div class="box" onclick="openStory(3)">
-        <h3>What He Admired</h3><div class="line"></div><p>Every version, every emotion.</p>
-      </div>
-      <div class="box" onclick="openStory(4)">
-        <h3>Leaving It Here</h3><div class="line"></div><p>Nothing forced. Nothing asked.</p>
-      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="curious-btn" onclick="openFinal()">Just curious??</button>
     </div>
   </div>
 </div>
@@ -220,6 +280,25 @@ h2 {
   </div>
 </div>
 
+<!-- FINAL SHEET -->
+<div class="final-sheet" id="finalSheet">
+  <div class="final-content">
+    <h1>THERE IS NO MORAL HERE</h1>
+    <h1>IT WAS JUST A STORY</h1>
+
+    <div class="small">
+      and I was curious to know what will happen next but I woke up 😂
+    </div>
+
+    <div class="leave">
+      LEAVE THIS STORY HERE<br>
+      HOWEVER PLEASE ACCEPT MY SMALL GIFT 🎁
+    </div>
+
+    <div class="sign">from a wrong number</div>
+  </div>
+</div>
+
 <script>
 function enterStory() {
   document.getElementById("intro").style.display = "none";
@@ -227,11 +306,9 @@ function enterStory() {
 }
 
 const stories = [
-  { bg:"story1.jpg", html:"<h3>The Beginning</h3><p>They didn’t share a common language, yet their hearts somehow understood each other. The boy found a true friend in her and offered a small gift (to his treasure), knowing she wasn’t fond of such gestures. It wasn’t a mistake—it was his way of saying thank you. If the girl felt it wasn’t right for her, she had every right to reject it 😅</p>" },
-  { bg:"story2.jpg", html:"<h3>The Moon Thought</h3><p>A boy calls his girl the moon, wondering if he could ever reach her —then the engineer inside him smiles and says, no worries, I’ll build a rocket.Funny right Maanuu Do you really think that this boy prioritise that girl or is this just an fancy line to impress?</p>" },
-  { bg:"story3.jpg", html:"<h3>No Impressing</h3><p>When I shared this thought with the boy, he said:“Why should I try to impress her? I’m already impressed by her for no reason.” I checked with him what did you like? He laughed and said it was her cuteness — how it shows in her innocence, her anger, her pain, her smile, her emotions, her strictness, her rejection, and her acceptance. I asked again, “Don’t you want her to love you?” He replied, “Pure love never forces anyone to love, nor does it beg for it.” So I asked, “Then what is the point of all this?” He smiled gently and said, “So that I never regret in the future for having missed such a divine soul.”</p>" },
-  { bg:"story4.jpg", html:"<h3>Moral</h3><p> There is no moral here It was just a story and I was curious to know what will happen next but I woke up 😂 </p>" },
-  { bg:"story5.jpg", html:"<h3>Leaving It Here</h3><p>Please accept my small gift 🎁</p>" }
+  { bg:"story1.jpg", html:"<p>They didn’t share a common language, yet their hearts somehow understood each other...</p>" },
+  { bg:"story2.jpg", html:"<p>A boy calls his girl the moon, wondering if he could ever reach her...</p>" },
+  { bg:"story3.jpg", html:"<p>Pure love never forces anyone to love, nor does it beg for it.</p>" }
 ];
 
 function openStory(i){
@@ -239,8 +316,13 @@ function openStory(i){
   document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
 }
+
 function closeStory(){
   document.getElementById("full").style.display = "none";
+}
+
+function openFinal() {
+  document.getElementById("finalSheet").style.display = "block";
 }
 </script>
 
