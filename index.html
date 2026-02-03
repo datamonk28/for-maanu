@@ -34,12 +34,12 @@ body {
 .track {
   display: flex;
   gap: 20px;
-  transition: transform .6s ease;
+  transition: transform .5s ease;
 }
 
 .card {
-  width: 260px;
-  min-height: 360px;
+  width: 240px;
+  min-height: 340px;
   padding: 18px;
   border-radius: 18px;
   background: rgba(255,255,255,.18);
@@ -48,12 +48,12 @@ body {
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
   color: white;
   cursor: pointer;
-  transition: transform .4s ease, opacity .4s ease;
+  transition: transform .35s ease, opacity .35s ease;
   opacity: .6;
 }
 
 .card.active {
-  transform: scale(1.05);
+  transform: scale(1.06);
   opacity: 1;
 }
 
@@ -61,37 +61,47 @@ body {
 .full {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.65);
+  z-index: 10;
   display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
+  background: rgba(0,0,0,.55);
 }
 
 .full-card {
-  width: 90%;
-  max-width: 800px;
-  padding: 28px;
-  border-radius: 22px;
+  height: 100%;
+  width: 100%;
+  padding: 22px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   color: white;
-  line-height: 1.7;
+  overflow-y: auto;
+  animation: expand .4s ease;
 }
 
 .close {
-  margin-top: 20px;
-  padding: 12px 26px;
-  border-radius: 30px;
+  position: sticky;
+  top: 0;
+  float: right;
+  margin-bottom: 15px;
+  padding: 10px 18px;
+  border-radius: 22px;
   border: none;
   background: white;
   color: #333;
+  font-size: 1rem;
 }
 
-/* mobile tweak */
-@media (max-width: 600px) {
-  .card { width: 220px; min-height: 320px; }
+@keyframes expand {
+  from { transform: scale(.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@media (min-width: 700px) {
+  .full-card {
+    max-width: 800px;
+    margin: auto;
+    border-radius: 22px;
+  }
 }
 </style>
 </head>
@@ -103,38 +113,36 @@ body {
 <div class="slider">
   <div class="track" id="track">
 
-    <div class="card active" onclick="focusCard(0)">
+    <div class="card active" onclick="openCard(0)">
       They didn’t share a common language, yet their hearts somehow understood each other…
     </div>
 
-    <div class="card" onclick="focusCard(1)">
+    <div class="card" onclick="openCard(1)">
       A boy calls his girl the moon, wondering if he could ever reach her…
     </div>
 
-    <div class="card" onclick="focusCard(2)">
+    <div class="card" onclick="openCard(2)">
       “Why should I try to impress her? I’m already impressed by her for no reason.”
     </div>
 
-    <div class="card" onclick="focusCard(3)">
+    <div class="card" onclick="openCard(3)">
       “Pure love never forces anyone to love…”
     </div>
 
   </div>
 </div>
 
-<!-- FULL VIEW -->
+<!-- FULL SCREEN -->
 <div class="full" id="full">
   <div class="full-card">
+    <button class="close" onclick="closeCard()">Close</button>
     <div id="fullText"></div>
-    <button class="close" onclick="closeFull()">Close</button>
   </div>
 </div>
 
 <script>
-let index = 0;
-
-const track = document.getElementById("track");
 const cards = document.querySelectorAll(".card");
+const track = document.getElementById("track");
 
 const stories = [
 `They didn’t share a common language, yet their hearts somehow understood each other.
@@ -147,7 +155,8 @@ then the engineer inside him smiles and says,
 no worries, I’ll build a rocket. Funny right, Maanuu?`,
 
 `“Why should I try to impress her? I’m already impressed by her for no reason.”
-He admired her innocence, anger, pain, smile, rejection, and acceptance.`,
+He admired her innocence, anger, pain, smile,
+rejection, and acceptance.`,
 
 `“Pure love never forces anyone to love, nor does it beg for it.
 This was just so I never regret missing such a divine soul.”
@@ -155,24 +164,18 @@ Please accept my small gift 🎁
 from a wrong number.`
 ];
 
-function focusCard(i) {
-  index = i;
+function openCard(i) {
+  cards.forEach((c, idx) => c.classList.toggle("active", idx === i));
 
-  cards.forEach((c, idx) => {
-    c.classList.toggle("active", idx === i);
-  });
-
-  const offset = (window.innerWidth / 2) - (cards[i].offsetLeft + cards[i].offsetWidth / 2);
+  const offset = (window.innerWidth / 2) -
+    (cards[i].offsetLeft + cards[i].offsetWidth / 2);
   track.style.transform = `translateX(${offset}px)`;
 
-  // second tap opens full
-  if (event.detail === 2) {
-    document.getElementById("fullText").innerText = stories[i];
-    document.getElementById("full").style.display = "flex";
-  }
+  document.getElementById("fullText").innerText = stories[i];
+  document.getElementById("full").style.display = "block";
 }
 
-function closeFull() {
+function closeCard() {
   document.getElementById("full").style.display = "none";
 }
 </script>
