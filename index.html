@@ -1,56 +1,9 @@
-Code
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>A Small Story 🤍</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-/* ===== PASSWORD SCREEN ===== */
-.password-screen {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(180deg, #0b1026, #1b2347);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-
-.password-card {
-  background: rgba(255,255,255,.12);
-  backdrop-filter: blur(16px);
-  padding: 28px;
-  border-radius: 20px;
-  text-align: center;
-  width: 90%;
-  max-width: 320px;
-}
-
-.password-card h2 {
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.password-card input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  margin-top: 10px;
-  font-size: 1rem;
-}
-
-.password-card button {
-  margin-top: 18px;
-  padding: 12px;
-  width: 100%;
-  border-radius: 18px;
-  border: none;
-  background: white;
-  color: #111;
-  font-size: 1rem;
-}
 
 <style>
 * { box-sizing: border-box; }
@@ -61,15 +14,43 @@ body {
   color: white;
 }
 
-<!-- PASSWORD -->
-<div class="password-screen" id="passwordScreen">
-  <div class="password-card">
-    <h2>Enter Password</h2>
-    <input type="password" id="passwordInput" placeholder="Password">
-    <button onclick="checkPassword()">Unlock</button>
-  </div>
-</div>
-
+/* ===== PASSWORD SCREEN ===== */
+.password-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #0b1026, #1b2347);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.password-card {
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(18px);
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 320px;
+}
+.password-card h2 { margin-bottom: 14px; font-weight: 500; }
+.password-card input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  font-size: 1rem;
+}
+.password-card button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 18px;
+  border: none;
+  background: white;
+  color: #111;
+  font-size: 1rem;
+}
 
 /* ===== INTRO ===== */
 .intro {
@@ -93,8 +74,6 @@ body {
   padding: 24px;
   max-width: 420px;
 }
-.intro-card h1 { font-weight: 500; margin-bottom: 12px; }
-.intro-card p { opacity: .9; line-height: 1.6; }
 .intro-card button {
   margin-top: 24px;
   padding: 12px 26px;
@@ -102,7 +81,6 @@ body {
   border: none;
   background: white;
   color: #111;
-  font-size: 1rem;
 }
 
 /* ===== STORY PAGE ===== */
@@ -123,7 +101,6 @@ body {
   background-size: 120px 120px, 200px 200px;
   background-position: 0 0, 60px 60px;
   opacity: .2;
-  pointer-events: none;
 }
 .overlay { padding: 28px 16px 40px; }
 h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
@@ -140,17 +117,14 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   border-radius: 18px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(14px);
-  box-shadow: 0 15px 30px rgba(0,0,0,.35);
   cursor: pointer;
 }
-.box h3 { margin: 0 0 6px; font-weight: 500; }
 .line {
   width: 40px;
   height: 2px;
   background: rgba(255,215,150,.8);
   margin-bottom: 12px;
 }
-.box p { opacity: .85; margin: 0; }
 
 /* Curious button */
 .curious-btn {
@@ -158,14 +132,11 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   padding: 14px 32px;
   border-radius: 30px;
   border: none;
-  font-size: 1.05rem;
   background: linear-gradient(135deg, #f6d365, #fda085);
-  color: #1a1a1a;
 }
 .curious-btn.disabled {
   opacity: .4;
   cursor: not-allowed;
-  background: linear-gradient(135deg, #999, #777);
 }
 
 /* ===== FULL STORY ===== */
@@ -173,13 +144,12 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   position: fixed;
   inset: 0;
   display: none;
-  z-index: 10;
+  z-index: 20;
 }
 .full-bg {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
   filter: blur(4px);
 }
 .full-overlay {
@@ -191,44 +161,18 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   position: relative;
   max-width: 760px;
   margin: 40px auto;
-  padding: 28px 24px 40px;
+  padding: 28px;
   border-radius: 22px;
   background: rgba(10,12,25,.9);
-  overflow-y: auto;
 }
 .close {
-  position: sticky;
-  top: 0;
   margin-left: auto;
   display: block;
-  padding: 10px 18px;
-  border-radius: 22px;
-  border: none;
   background: white;
-  color: #111;
+  border-radius: 20px;
+  border: none;
+  padding: 10px 18px;
 }
-.full-card p {
-  line-height: 1.8;
-  font-size: 1.05rem;
-}
-.signature {
-  margin-top: 40px;
-  opacity: .8;
-  font-style: italic;
-  text-align: right;
-}
-
-.highlight-yellow {
-  color: #FFD700; /* soft yellow */
-  font-weight: 500;
-}
-
-.question-yellow {
-  color: #FFD700;
-  font-weight: 500;
-}
-
-
 
 /* ===== FINAL SHEET ===== */
 .final-sheet {
@@ -236,8 +180,7 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   inset: 0;
   display: none;
   background: #9b4a1f;
-  color: white;
-  z-index: 20;
+  z-index: 30;
 }
 .final-content {
   height: 100%;
@@ -246,72 +189,55 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   justify-content: center;
   padding: 32px;
 }
-.final-content h1 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0 0 14px;
-}
-.final-content .small {
-  margin: 20px 0;
-  font-size: 1.05rem;
-}
-.final-content .leave {
-  margin-top: 40px;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.final-content .sign {
-  margin-top: 12px;
-  font-style: italic;
-}
-</style>
-/* ===== POEM FINAL PAGE ===== */
+
+/* ===== POEM PAGE ===== */
 .poem-page {
   position: fixed;
   inset: 0;
   display: none;
   background: url("girl.jpg") center/cover no-repeat;
-  z-index: 30;
+  z-index: 40;
 }
-
 .poem-page::after {
   content: "";
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,.55);
 }
-
 .poem-content {
   position: relative;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
   text-align: center;
+  padding: 30px;
 }
-
 .poem-content p {
   max-width: 600px;
   font-size: 1.2rem;
   line-height: 1.8;
   font-style: italic;
 }
-
-
+</style>
 </head>
 
 <body>
 
+<!-- PASSWORD -->
+<div class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+</div>
+
 <!-- INTRO -->
-<div class="intro" id="intro">
+<div class="intro" id="intro" style="display:none;">
   <div class="intro-card">
     <h1>Hey Maanuu 🤍</h1>
-    <p>
-      Ek kahani sunegi kya?<br>
-      Nothing dramatic.<br>
-      Just something I wanted to share.
-    </p>
+    <p>Ek kahani sunegi kya?</p>
     <button onclick="enterStory()">Continue</button>
   </div>
 </div>
@@ -322,24 +248,13 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
     <h2>A Small Story 🤍</h2>
 
     <div class="container">
-      <div class="box" onclick="openStory(0)">
-        <h3>The Beginning</h3><div class="line"></div>
-        <p>Two hearts, quietly understanding each other…</p>
-      </div>
-      <div class="box" onclick="openStory(1)">
-        <h3>The Moon Thought</h3><div class="line"></div>
-        <p>Is it poetry, or something honest?</p>
-      </div>
-      <div class="box" onclick="openStory(2)">
-        <h3>No Impressing</h3><div class="line"></div>
-        <p>Some feelings don’t need effort.</p>
-      </div>
+      <div class="box" onclick="openStory(0)"><div class="line"></div>Beginning</div>
+      <div class="box" onclick="openStory(1)"><div class="line"></div>Moon Thought</div>
+      <div class="box" onclick="openStory(2)"><div class="line"></div>No Impressing</div>
     </div>
 
     <div style="text-align:center;">
-      <button id="curiousBtn" class="curious-btn disabled" disabled>
-        Just curious??
-      </button>
+      <button id="curiousBtn" class="curious-btn disabled" disabled>Just curious??</button>
     </div>
   </div>
 </div>
@@ -351,18 +266,23 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   <div class="full-card">
     <button class="close" onclick="closeStory()">Close</button>
     <div id="fullText"></div>
-    <div class="signature">— from a wrong number</div>
   </div>
 </div>
 
-<!-- FINAL SHEET -->
-<!-- POEM PAGE -->
+<!-- FINAL -->
+<div class="final-sheet" id="finalSheet">
+  <div class="final-content">
+    <h1>THERE IS NO MORAL HERE</h1>
+    <h1>IT WAS JUST A STORY</h1>
+  </div>
+</div>
+
+<!-- POEM -->
 <div class="poem-page" id="poemPage">
   <div class="poem-content">
     <p>
       She was never meant to be owned,<br>
       only understood.<br><br>
-
       Some souls walk with us,<br>
       not to stay —<br>
       but to remind us<br>
@@ -371,142 +291,45 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   </div>
 </div>
 
-  
-<div class="final-sheet" id="finalSheet">
-  <div class="final-content">
-    <h1>THERE IS NO MORAL HERE</h1>
-    <h1>IT WAS JUST A STORY</h1>
-
-    <div class="small">
-      and I was curious to know what will happen next but I woke up 😂
-    </div>
-
-    <div class="leave">
-      LEAVE THIS STORY HERE<br>
-      HOWEVER PLEASE ACCEPT MY SMALL GIFT 🎁
-    </div>
-
-    <div class="sign">from a wrong number</div>
-  </div>
-</div>
-
 <script>
-const PASSWORD = "maanuu"; // 🔐 change this
+const PASSWORD = "maanuu";
+const stories = [
+  { bg:"manu.png", html:"<p>They didn’t share a common language...</p>" },
+  { bg:"chatgpt.png", html:"<p>He called her the moon...</p>" },
+  { bg:"canva2.png", html:"<p>Pure love never forces...</p>" }
+];
+const opened = new Set();
 
 function checkPassword() {
-  const input = document.getElementById("passwordInput").value;
-  if (input === PASSWORD) {
+  if (document.getElementById("passwordInput").value === PASSWORD) {
     document.getElementById("passwordScreen").style.display = "none";
-  } else {
-    alert("Wrong password");
-  }
+    document.getElementById("intro").style.display = "flex";
+  } else alert("Wrong password");
 }
-
-  
 function enterStory() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("storyPage").style.display = "block";
 }
-
-const stories = [
-  {
-    bg: "manu.png",
-    html: `
-      <p>
-        They didn’t share a common language, yet their hearts somehow understood each other.
-        The boy found a true friend in her and offered a small gift (to his treasure),
-        knowing she wasn’t fond of such gestures.
-        It wasn’t a mistake—it was his way of saying thank you.
-        If the girl felt it wasn’t right for her, she had every right to reject it 😅
-      </p>
-    `
-  },
-  {
-    bg: "chatgpt.png",
-    html: `
-      <p>
-        A boy calls his girl the moon, wondering if he could ever reach her —
-        then the engineer inside him smiles and says,
-        no worries, I’ll build a rocket.
-      </p>
-
-      <p>
-        <span class="highlight-yellow">Funny right Maanuu</span>
-      </p>
-
-      <p>
-        Do you really think that this boy prioritise that girl
-        or is this just a fancy line to impress?
-      </p>
-    `
-  },
-  {
-    bg: "canva2.png",
-    html: `
-      <p><span class="question-yellow">When I shared this thought with the boy, he said:</span></p>
-
-      <p>“Why should I try to impress her?</p>
-      <p>I’m already impressed by her for no reason.”</p>
-
-      <p><span class="question-yellow">I checked with him what did you like?</span></p>
-
-      <p>
-        He laughed and said it was her cuteness —
-        how it shows in her innocence, her anger, her pain, her smile,
-        her emotions, her strictness, her rejection, and her acceptance.
-      </p>
-
-      <p><span class="question-yellow">I asked again, “Don’t you want her to love you?”</span></p>
-
-      <p>
-        He replied,
-        “Pure love never forces anyone to love, nor does it beg for it.”
-      </p>
-
-      <p><span class="question-yellow">So I asked, “Then what is the point of all this?”</span></p>
-
-      <p>
-        He smiled gently and said,
-        “So that I never regret in the future for having missed such a divine soul.”
-      </p>
-    `
-  }
-];
-
-
-const opened = new Set();
-
-function openStory(i){
+function openStory(i) {
   opened.add(i);
-
-  document.getElementById("fullBg").style.backgroundImage =
-    `url(${stories[i].bg})`;
+  document.getElementById("fullBg").style.backgroundImage = `url(${stories[i].bg})`;
   document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
-
   if (opened.size === 3) unlockCurious();
 }
-
-function closeStory(){
+function closeStory() {
   document.getElementById("full").style.display = "none";
 }
-
 function unlockCurious() {
   const btn = document.getElementById("curiousBtn");
   btn.disabled = false;
   btn.classList.remove("disabled");
   btn.onclick = openFinal;
 }
-
 function openFinal() {
   document.getElementById("finalSheet").style.display = "block";
-
-  // auto-open poem page after few seconds
-  setTimeout(() => {
-    document.getElementById("poemPage").style.display = "block";
-  }, 4000);
+  setTimeout(()=>document.getElementById("poemPage").style.display="block",4000);
 }
-
 </script>
 
 </body>
