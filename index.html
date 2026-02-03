@@ -16,18 +16,11 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== 1. LOGIN SCREEN ===== */
-#passwordOverlay {
-  position: fixed;
-  inset: 0;
+/* ===== SHARED TEMPLATE STYLES ===== */
+.template-bg {
   background: linear-gradient(45deg, #0b1026, #1b2347, #0b1026);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
 }
 
 @keyframes gradientBG {
@@ -36,11 +29,20 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
 .star {
   position: absolute;
   background: white;
   border-radius: 50%;
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
   animation: float linear infinite;
 }
@@ -50,18 +52,25 @@ body {
   to { transform: translateY(-10vh); }
 }
 
+/* ===== 1. LOGIN SCREEN ===== */
+#passwordOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
 .pass-card {
-  background: rgba(255, 255, 255, 0.07);
   padding: 40px 30px;
-  border-radius: 30px;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
   width: 100%;
   max-width: 350px;
   text-align: center;
-  z-index: 9001;
 }
+
+.pass-card h2 { color: #ffd700; margin: 0 0 10px; }
 
 .pass-card input {
   background: rgba(255, 255, 255, 0.1);
@@ -99,9 +108,9 @@ body {
   justify-content: center;
   z-index: 1000;
 }
-.intro::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+.intro::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
 
-.story-page { display: none; min-height: 100vh; background: #0b1026; padding: 60px 20px; }
+.story-page { display: none; min-height: 100vh; padding: 60px 20px; }
 
 .container {
   max-width: 900px;
@@ -120,12 +129,13 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
+.box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
 
 .line { width: 40px; height: 2px; background: #ffd700; margin-bottom: 12px; }
 
-/* ===== 3. MODAL ===== */
+/* ===== 3. STORY MODAL ===== */
 .full { position: fixed; inset: 0; display: none; z-index: 2000; }
-.full-bg { position: absolute; inset: 0; background-size: cover; filter: blur(10px); }
+.full-bg { position: absolute; inset: 0; background-size: cover; filter: blur(15px); }
 .full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); }
 .full-card {
   position: relative;
@@ -135,15 +145,13 @@ body {
   border-radius: 25px;
   background: rgba(15, 20, 40, 0.98);
   border: 1px solid rgba(255,255,255,0.1);
-  line-height: 1.8;
 }
 
-/* ===== 4. REDESIGNED NO MORAL PAGE ===== */
+/* ===== 4. NO MORAL TRANSITION ===== */
 .final-sheet {
   position: fixed;
   inset: 0;
   display: none;
-  background: radial-gradient(circle, rgba(155, 74, 31, 0.4) 0%, rgba(11, 16, 38, 0.95) 100%);
   backdrop-filter: blur(15px);
   z-index: 3000;
   align-items: center;
@@ -160,81 +168,75 @@ body {
   box-shadow: 0 30px 60px rgba(0,0,0,0.6);
   text-align: center;
   transform: rotate(-1deg);
-  animation: slideNote 0.6s ease-out;
 }
 
-@keyframes slideNote { from { opacity: 0; transform: translateY(40px) rotate(0); } }
-
-.final-card-wrapper h1 { font-family: 'Georgia', serif; color: #9b4a1f; font-size: 1.4rem; margin-bottom: 15px; }
-
-.gift-btn {
-  background: #9b4a1f;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 50px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-/* ===== 5. LAST POEM PAGE ===== */
+/* ===== 5. FINAL POEM PAGE ===== */
 .last-page {
   position: fixed;
   inset: 0;
   display: none;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
   z-index: 4000;
   overflow-y: auto;
   text-align: center;
   padding: 60px 20px;
 }
-.girl-image {
-  width: 260px;
-  height: 360px;
-  object-fit: cover;
-  border-radius: 130px 130px 30px 30px; 
-  border: 2px solid #ffd700;
-  margin-bottom: 30px;
-}
-.poem-container {
-  max-width: 600px;
+
+.poem-card {
+  max-width: 500px;
   margin: 0 auto;
-  font-family: "Georgia", serif;
-  font-style: italic;
-  line-height: 2;
-  color: #f0e68c;
-  padding: 30px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 20px;
+  padding: 40px 20px;
 }
 
-/* UI Elements */
+.girl-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #ffd700;
+  margin-bottom: 25px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.poem-container {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  line-height: 2.2;
+  color: #f0e68c;
+  font-size: 1.1rem;
+}
+
+/* UI Controls */
 .music-control {
   position: fixed;
-  bottom: 20px; right: 20px; z-index: 6000;
+  bottom: 20px; right: 20px; z-index: 9999;
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
   color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
   display: none; align-items: center; justify-content: center;
 }
+
 .curious-btn { 
-    margin-top: 40px; padding: 15px 40px; border-radius: 30px; border: none; 
-    background: linear-gradient(135deg, #f6d365, #fda085); cursor: pointer; font-weight: bold;
+  margin-top: 40px; padding: 15px 40px; border-radius: 30px; border: none; 
+  background: linear-gradient(135deg, #f6d365, #fda085); cursor: pointer; font-weight: bold;
 }
 .curious-btn.disabled { opacity: 0.2; cursor: not-allowed; }
+
+.heart-flare { position: absolute; color: #ff4d4d; animation: heartFloat 2s ease-out forwards; pointer-events: none;}
+@keyframes heartFloat { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100px); opacity: 0; } }
 </style>
 </head>
 
-<body>
+<body class="template-bg">
 
 <audio id="bgMusic" loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
+  <source src="mysong.mp3" type="audio/mpeg">
 </audio>
 
 <button class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</button>
 
+<div id="starContainer"></div>
+
 <div id="passwordOverlay">
-  <div class="pass-card">
+  <div class="pass-card glass-card">
     <h2>Secret Key</h2>
     <p>Only for Maanuu's eyes 🤍</p>
     <input type="password" id="passInput" placeholder="••••">
@@ -243,16 +245,16 @@ body {
 </div>
 
 <div class="intro" id="intro">
-  <div style="position:relative; z-index:1; text-align:center;">
+  <div style="position:relative; z-index:1; text-align:center; padding: 20px;">
     <h1>Hey Maanuu 🤍</h1>
     <p>Ek kahani sunegi kya?</p>
-    <button onclick="enterStory()" style="padding:12px 30px; border-radius:20px; border:none; cursor:pointer;">Continue</button>
+    <button onclick="enterStory()" style="padding:12px 30px; border-radius:25px; border:none; cursor:pointer; font-weight:bold;">Continue</button>
   </div>
 </div>
 
 <div class="story-page" id="storyPage">
   <div style="text-align:center; margin-bottom:40px;">
-    <h2>A Small Story 🤍</h2>
+    <h2 style="font-size: 2rem;">A Small Story 🤍</h2>
   </div>
   <div class="container">
     <div class="box" onclick="openStory(0)"><h3>The Beginning</h3><div class="line"></div><p>Two hearts, quietly understanding each other…</p></div>
@@ -268,62 +270,72 @@ body {
   <div class="full-bg" id="fullBg"></div>
   <div class="full-overlay"></div>
   <div class="full-card">
-    <button onclick="closeStory()" style="float:right; border:none; padding:5px 10px; border-radius:8px; cursor:pointer;">✕ Close</button>
-    <div id="fullText" style="margin-top:40px;"></div>
+    <button onclick="closeStory()" style="float:right; border:none; padding:8px 15px; border-radius:10px; cursor:pointer; background:white;">✕ Close</button>
+    <div id="fullText" style="margin-top:50px; line-height:1.8; color:white;"></div>
   </div>
 </div>
 
 <div class="final-sheet" id="finalSheet">
   <div class="final-card-wrapper">
-    <h1>There is no moral here.</h1>
-    <p style="color:#666; line-height:1.6;">It was just a story... <br> I was curious to know what happens next, but then I woke up. 😂</p>
-    <div style="border-top:1px dashed #ccc; margin:20px 0; padding-top:20px;">
+    <h1 style="margin:0; font-family:Georgia; color:#9b4a1f;">There is no moral here.</h1>
+    <p style="color:#555; margin:20px 0;">It was just a story... <br> I was curious to know what happens next, but then I woke up. 😂</p>
+    <div style="border-top:1px dashed #ccc; padding-top:20px;">
         <span style="font-weight:bold; color:#9b4a1f;">Wait, before you go... 🎁</span>
     </div>
-    <button class="gift-btn" onclick="showLastPage()">Accept Small Gift 💝</button>
+    <button style="background:#9b4a1f; color:white; border:none; padding:15px 30px; border-radius:50px; margin-top:20px; cursor:pointer; font-weight:bold;" onclick="showLastPage()">Accept Small Gift 💝</button>
   </div>
 </div>
 
-<div class="last-page" id="lastPage">
-  <img src="myfavy.jpeg" alt="Maanuu" class="girl-image">
-  <div class="poem-container">
-    <p>हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।</p>
-    <p>तू मेरी दुनिया की वो ख़ामोश, सबसे हसीं दुआ हुई,<br>लबों पे नाम न आ सका, मगर असर में तू सदा रहा करे।</p>
-    <p>नसीब में नहीं वो सितारा, जो ख़्वाबों की मंज़िल था कभी,<br>चुन ली ज़मीं की राहत मैंने, अब सर झुका-झुका रहा करे।</p>
-    <p>हसरत भरी इन आँखों से तुझे तकना है इबादत मेरी,<br>जैसे कोई मासूम बच्चा, किसी चाँद की ओर रहा करे।</p>
-    <p>तुझे दूर से ही देखते रहना, मेरी मुकम्मल वफ़ा रहा करे।</p>
-    <div style="margin-top:30px; opacity:0.5; font-size:0.8rem;">— for you, Maanuu</div>
+<div class="last-page template-bg" id="lastPage">
+  <div class="poem-card glass-card" id="poemBox">
+    <img src="myfavy.jpeg" alt="Maanuu" class="girl-image">
+    <div class="poem-container">
+      <p>हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।</p>
+      <p>तू मेरी दुनिया की वो ख़ामोश, सबसे हसीं दुआ हुई,<br>लबों पे नाम न आ सका, मगर असर में तू सदा रहा करे।</p>
+      <p>नसीब में नहीं वो सितारा, जो ख़्वाबों की मंज़िल था कभी,<br>चुन ली ज़मीं की राहत मैंने, अब सर झुका-झुका रहा करे।</p>
+      <p>हसरत भरी इन आँखों से तुझे तकना है इबादत मेरी,<br>जैसे कोई मासूम बच्चा, किसी चाँद की ओर रहा करे।</p>
+      <p>तुझे दूर से ही देखते रहना, मेरी मुकम्मल वफ़ा रहा करे।</p>
+      <div style="margin-top:30px; color:#ffd700; letter-spacing:2px; font-size:0.8rem;">— FOR MAANUU</div>
+    </div>
   </div>
-  <button style="margin-top:30px; background:none; border:1px solid #ffd700; color:#ffd700; padding:10px 20px; border-radius:20px; cursor:pointer;" onclick="location.reload()">↺ Restart Story</button>
+  <button style="background:none; border:1px solid rgba(255,215,0,0.5); color:#ffd700; padding:10px 25px; border-radius:25px; cursor:pointer; margin-bottom:40px;" onclick="location.reload()">↺ Restart Story</button>
 </div>
 
 <script>
-// Background Stars
+// Star Logic
 function createStars() {
-  const container = document.getElementById('passwordOverlay');
-  for (let i = 0; i < 50; i++) {
+  const container = document.getElementById('starContainer');
+  for (let i = 0; i < 60; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    star.style.width = Math.random() * 3 + 'px';
-    star.style.height = star.style.width;
+    const size = Math.random() * 3 + 'px';
+    star.style.width = size; star.style.height = size;
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
-    star.style.animationDuration = (Math.random() * 8 + 4) + 's';
+    star.style.animationDuration = (Math.random() * 8 + 5) + 's';
+    star.style.animationDelay = Math.random() * 5 + 's';
     container.appendChild(star);
   }
 }
 window.onload = createStars;
 
-// Functions
+// Auth
 function checkPassword() {
   if (document.getElementById("passInput").value === "1234") {
     document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
-  } else { alert("Incorrect Key ✨"); }
+  } else { alert("Not the magic word! ✨"); }
 }
 
+// Enter Story & Play Music
 function enterStory() {
-  document.getElementById("bgMusic").play().catch(() => {});
+  const music = document.getElementById("bgMusic");
+  
+  // SET YOUR VOLUME HERE (0.3 = 30%)
+  music.volume = 0.3; 
+  
+  music.play().catch(() => {});
+  
   document.getElementById("musicBtn").style.display = "flex";
   document.getElementById("intro").style.display = "none";
   document.getElementById("storyPage").style.display = "block";
@@ -331,14 +343,15 @@ function enterStory() {
 
 function toggleMusic() {
   const m = document.getElementById("bgMusic");
-  if (m.paused) { m.play(); document.getElementById("musicBtn").innerHTML = "🎵"; }
-  else { m.pause(); document.getElementById("musicBtn").innerHTML = "🔇"; }
+  const b = document.getElementById("musicBtn");
+  if (m.paused) { m.play(); b.innerHTML = "🎵"; }
+  else { m.pause(); b.innerHTML = "🔇"; }
 }
 
 const stories = [
-  { bg: "manu.png", html: "<p>They didn’t share a common language, yet their hearts understood each other. He offered a gift as a thank you.</p>" },
-  { bg: "chatgpt.png", html: "<p>He calls her the moon... then thinks, 'No worries, I'll build a rocket.' <br><br><b>Funny right Maanuu?</b></p>" },
-  { bg: "canva2.jpg", html: "<p>He said, 'Why should I try to impress her? I’m already impressed by her for no reason.' Pure love never forces.</p>" }
+  { bg: "manu.png", html: "<h3>The Beginning</h3><p>They didn’t share a common language, yet their hearts understood each other. The boy offered a small gift, knowing she wasn’t fond of gestures. It was his way of saying thank you.</p>" },
+  { bg: "chatgpt.png", html: "<h3>The Moon Thought</h3><p>A boy calls his girl the moon... the engineer inside him says: 'No worries, I'll build a rocket.' <br><br><b>Funny right Maanuu?</b></p>" },
+  { bg: "canva2.jpg", html: "<h3>No Impressing</h3><p>He said, 'Why should I try to impress her? I’m already impressed by her for no reason.' Pure love never forces anyone. I just don't want to regret missing such a divine soul.</p>" }
 ];
 
 const opened = new Set();
@@ -350,7 +363,9 @@ function openStory(i) {
   if (opened.size === 3) {
     const btn = document.getElementById("curiousBtn");
     btn.disabled = false; btn.classList.remove("disabled");
-    btn.onclick = () => document.getElementById("finalSheet").style.display = "flex";
+    btn.onclick = () => {
+        document.getElementById("finalSheet").style.display = "flex";
+    };
   }
 }
 
@@ -359,6 +374,15 @@ function showLastPage() {
   document.getElementById("finalSheet").style.display = "none";
   document.getElementById("lastPage").style.display = "block";
 }
+
+// Heart Effect
+document.getElementById('poemBox').addEventListener('click', function(e) {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️'; heart.className = 'heart-flare';
+    heart.style.left = e.pageX + 'px'; heart.style.top = e.pageY + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 2000);
+});
 </script>
 
 </body>
