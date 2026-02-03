@@ -18,8 +18,15 @@ body {
 
 .overlay {
   min-height: 100vh;
-  background: rgba(0,0,0,.45);
-  padding: 24px 16px 40px;
+  background: rgba(0,0,0,.5);
+  padding: 28px 16px 40px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 26px;
+  font-weight: 500;
+  letter-spacing: .5px;
 }
 
 .container {
@@ -31,34 +38,76 @@ body {
 }
 
 .box {
-  padding: 20px;
+  padding: 22px;
   border-radius: 18px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
+  cursor: pointer;
   animation: rise .8s ease both;
 }
 
-.box:nth-child(1) { animation-delay: .1s; }
-.box:nth-child(2) { animation-delay: .25s; }
-.box:nth-child(3) { animation-delay: .4s; }
-.box:nth-child(4) { animation-delay: .55s; }
-.box:nth-child(5) { animation-delay: .7s; }
-
-h1 {
-  text-align: center;
-  margin-bottom: 22px;
+.box:hover {
+  background: rgba(255,255,255,.24);
 }
 
-p {
+.box h3 {
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+
+.line {
+  width: 40px;
+  height: 2px;
+  background: rgba(255,255,255,.6);
+  margin-bottom: 12px;
+}
+
+.box p {
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
 }
 
+/* full screen view */
+.full {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  z-index: 10;
+}
+
+.full-card {
+  height: 100%;
+  padding: 28px 22px 40px;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  overflow-y: auto;
+  animation: fadeUp .35s ease;
+}
+
+.close {
+  position: sticky;
+  top: 0;
+  float: right;
+  padding: 10px 18px;
+  border-radius: 22px;
+  border: none;
+  background: white;
+  color: #333;
+  font-size: 1rem;
+}
+
 @keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 </style>
@@ -71,55 +120,88 @@ p {
 
   <div class="container">
 
-    <div class="box">
-      <p>
-        They didn’t share a common language, yet their hearts somehow understood each other.
-        The boy found a true friend in her and offered a small gift — not to impress,
-        but to say thank you.
-        If the girl felt it wasn’t right for her, she had every right to reject it 😅
-      </p>
+    <div class="box" onclick="openStory(0)">
+      <h3>The Beginning</h3>
+      <div class="line"></div>
+      <p>Two hearts, quietly understanding each other…</p>
     </div>
 
-    <div class="box">
-      <p>
-        A boy calls his girl the moon, wondering if he could ever reach her —
-        then the engineer inside him smiles and says,
-        no worries, I’ll build a rocket.
-        Funny right Maanuu?
-      </p>
+    <div class="box" onclick="openStory(1)">
+      <h3>The Moon Thought</h3>
+      <div class="line"></div>
+      <p>Is it poetry, or something honest?</p>
     </div>
 
-    <div class="box">
-      <p>
-        When asked why he would try to impress her, he replied:
-        “Why should I?
-        I’m already impressed by her for no reason.”
-      </p>
+    <div class="box" onclick="openStory(2)">
+      <h3>No Impressing</h3>
+      <div class="line"></div>
+      <p>Some feelings don’t need effort.</p>
     </div>
 
-    <div class="box">
-      <p>
-        He admired her cuteness —
-        her innocence, anger, pain, smile,
-        emotions, strictness, rejection,
-        and acceptance.
-      </p>
+    <div class="box" onclick="openStory(3)">
+      <h3>What He Admired</h3>
+      <div class="line"></div>
+      <p>Every version, every emotion.</p>
     </div>
 
-    <div class="box">
-      <p>
-        “Pure love never forces anyone to love,
-        nor does it beg for it.
-        This is just so I never regret
-        missing such a divine soul.”
-        <br><br>
-        Please accept my small gift 🎁
-        from a wrong number.
-      </p>
+    <div class="box" onclick="openStory(4)">
+      <h3>Leaving It Here</h3>
+      <div class="line"></div>
+      <p>Nothing forced. Nothing asked.</p>
     </div>
 
   </div>
 </div>
+
+<!-- FULL VIEW -->
+<div class="full" id="full">
+  <div class="full-card">
+    <button class="close" onclick="closeStory()">Close</button>
+    <div id="fullText"></div>
+    <div style="margin-top:40px;opacity:.8;font-style:italic;text-align:right;">
+      — from a wrong number
+    </div>
+  </div>
+</div>
+
+<script>
+const stories = [
+`They didn’t share a common language, yet their hearts somehow understood each other.
+The boy found a true friend in her and offered a small gift — not to impress,
+but to say thank you.
+If the girl felt it wasn’t right for her, she had every right to reject it 😅`,
+
+`A boy calls his girl the moon, wondering if he could ever reach her —
+then the engineer inside him smiles and says,
+no worries, I’ll build a rocket.
+Funny right Maanuu?`,
+
+`When asked why he would try to impress her, he replied:
+“Why should I?
+I’m already impressed by her for no reason.”`,
+
+`He admired her cuteness —
+her innocence, anger, pain, smile,
+emotions, strictness, rejection,
+and acceptance.`,
+
+`“Pure love never forces anyone to love,
+nor does it beg for it.
+This is just so I never regret
+missing such a divine soul.”
+
+Please accept my small gift 🎁`
+];
+
+function openStory(i) {
+  document.getElementById("fullText").innerText = stories[i];
+  document.getElementById("full").style.display = "block";
+}
+
+function closeStory() {
+  document.getElementById("full").style.display = "none";
+}
+</script>
 
 </body>
 </html>
