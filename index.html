@@ -14,7 +14,7 @@ body {
   color: white;
 }
 
-/* ========== INTRO PAGE ========== */
+/* ===== INTRO ===== */
 .intro {
   position: fixed;
   inset: 0;
@@ -23,14 +23,12 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 .intro::after {
   content: "";
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,.45);
 }
-
 .intro-card {
   position: relative;
   z-index: 1;
@@ -38,17 +36,8 @@ body {
   padding: 24px;
   max-width: 420px;
 }
-
-.intro-card h1 {
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-.intro-card p {
-  opacity: .9;
-  line-height: 1.6;
-}
-
+.intro-card h1 { font-weight: 500; margin-bottom: 12px; }
+.intro-card p { opacity: .9; line-height: 1.6; }
 .intro-card button {
   margin-top: 24px;
   padding: 12px 26px;
@@ -59,7 +48,7 @@ body {
   font-size: 1rem;
 }
 
-/* ========== STORY PAGE ========== */
+/* ===== STORY PAGE ===== */
 .story-page {
   display: none;
   min-height: 100vh;
@@ -67,7 +56,6 @@ body {
     radial-gradient(circle at top, rgba(255,215,150,.12), transparent 40%),
     linear-gradient(180deg, #0b1026, #1b2347);
 }
-
 .story-page::before {
   content: "";
   position: fixed;
@@ -80,16 +68,8 @@ body {
   opacity: .2;
   pointer-events: none;
 }
-
-.overlay {
-  padding: 28px 16px 40px;
-}
-
-h2 {
-  text-align: center;
-  font-weight: 500;
-  margin-bottom: 26px;
-}
+.overlay { padding: 28px 16px 40px; }
+h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
 
 .container {
   max-width: 900px;
@@ -98,7 +78,6 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 18px;
 }
-
 .box {
   padding: 22px;
   border-radius: 18px;
@@ -107,16 +86,13 @@ h2 {
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
   cursor: pointer;
 }
-
 .box h3 { margin: 0 0 6px; font-weight: 500; }
-
 .line {
   width: 40px;
   height: 2px;
   background: rgba(255,215,150,.8);
   margin-bottom: 12px;
 }
-
 .box p { opacity: .85; margin: 0; }
 
 /* Curious button */
@@ -129,15 +105,19 @@ h2 {
   background: linear-gradient(135deg, #f6d365, #fda085);
   color: #1a1a1a;
 }
+.curious-btn.disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #999, #777);
+}
 
-/* ===== FULL STORY VIEW ===== */
+/* ===== FULL STORY ===== */
 .full {
   position: fixed;
   inset: 0;
   display: none;
   z-index: 10;
 }
-
 .full-bg {
   position: absolute;
   inset: 0;
@@ -145,13 +125,11 @@ h2 {
   background-position: center;
   filter: blur(4px);
 }
-
 .full-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,.6);
 }
-
 .full-card {
   position: relative;
   max-width: 760px;
@@ -161,7 +139,6 @@ h2 {
   background: rgba(10,12,25,.9);
   overflow-y: auto;
 }
-
 .close {
   position: sticky;
   top: 0;
@@ -173,12 +150,10 @@ h2 {
   background: white;
   color: #111;
 }
-
 .full-card p {
   line-height: 1.8;
   font-size: 1.05rem;
 }
-
 .signature {
   margin-top: 40px;
   opacity: .8;
@@ -195,7 +170,6 @@ h2 {
   color: white;
   z-index: 20;
 }
-
 .final-content {
   height: 100%;
   display: flex;
@@ -203,24 +177,20 @@ h2 {
   justify-content: center;
   padding: 32px;
 }
-
 .final-content h1 {
   font-size: 2rem;
   font-weight: 800;
   margin: 0 0 14px;
 }
-
 .final-content .small {
   margin: 20px 0;
   font-size: 1.05rem;
 }
-
 .final-content .leave {
   margin-top: 40px;
   font-size: 1.2rem;
   font-weight: 700;
 }
-
 .final-content .sign {
   margin-top: 12px;
   font-style: italic;
@@ -264,7 +234,9 @@ h2 {
     </div>
 
     <div style="text-align:center;">
-      <button class="curious-btn" onclick="openFinal()">Just curious??</button>
+      <button id="curiousBtn" class="curious-btn disabled" disabled>
+        Just curious??
+      </button>
     </div>
   </div>
 </div>
@@ -311,14 +283,28 @@ const stories = [
   { bg:"story3.jpg", html:"<p>Pure love never forces anyone to love, nor does it beg for it.</p>" }
 ];
 
+const opened = new Set();
+
 function openStory(i){
-  document.getElementById("fullBg").style.backgroundImage = `url(${stories[i].bg})`;
+  opened.add(i);
+
+  document.getElementById("fullBg").style.backgroundImage =
+    `url(${stories[i].bg})`;
   document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
+
+  if (opened.size === 3) unlockCurious();
 }
 
 function closeStory(){
   document.getElementById("full").style.display = "none";
+}
+
+function unlockCurious() {
+  const btn = document.getElementById("curiousBtn");
+  btn.disabled = false;
+  btn.classList.remove("disabled");
+  btn.onclick = openFinal;
 }
 
 function openFinal() {
