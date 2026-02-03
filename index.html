@@ -1,151 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For You ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>A Small Story ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(180deg, #ff758c, #ff7eb3);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(180deg, #ff758c, #ff7eb3);
+  min-height: 100vh;
+  overflow: hidden;
+}
 
-    .card {
-      background: white;
-      width: 100%;
-      max-width: 420px;
-      padding: 26px 22px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-    h1 {
-      color: #ff4f70;
-      font-size: 2rem;
-      margin: 10px 0;
-    }
+.card {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.25);
+  text-align: center;
+}
 
-    p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #333;
-    }
+h1 {
+  color: #ff4f70;
+  margin: 10px 0;
+}
 
-    button {
-      margin-top: 18px;
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 30px;
-      background: #ff4f70;
-      color: white;
-      cursor: pointer;
-    }
+p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #333;
+}
 
-    .error {
-      color: #ff4f70;
-      margin-top: 10px;
-      display: none;
-    }
+img {
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 15px;
+}
 
-    .hidden {
-      display: none;
-    }
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
 
-    .heart {
-      font-size: 3.2rem;
-      margin-bottom: 10px;
-    }
-  </style>
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: #ff4f70;
+  color: white;
+  font-size: 1rem;
+}
+
+.error {
+  color: #ff4f70;
+  margin-top: 10px;
+  display: none;
+}
+
+.story {
+  display: none;
+}
+
+.slide {
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: .9rem;
+  color: #888;
+}
+</style>
 </head>
+
 <body>
 
-  <!-- PASSWORD SCREEN -->
-  <div class="card" id="login">
+<!-- PASSWORD -->
+<div class="screen" id="login">
+  <div class="card">
     <h1>Enter Password</h1>
-    <p>This story is just for you ❤️</p>
-
-    <input type="password" id="password" placeholder="Password"
-           style="width:100%;padding:14px;border-radius:30px;border:1px solid #ddd;">
+    <p>This story is just for you 🤍</p>
+    <input type="password" id="password" placeholder="Password">
     <button onclick="unlock()">Unlock</button>
     <div class="error" id="error">Wrong password</div>
   </div>
+</div>
 
-  <!-- STORY CARD -->
-  <div class="card hidden" id="story">
-    <div class="heart">❤️</div>
-    <h1 id="title"></h1>
-    <p id="text"></p>
-    <button onclick="nextSlide()" id="nextBtn">Next</button>
+<!-- STORY -->
+<div class="screen story" id="story">
+  <div class="card">
+
+    <div class="slide active">
+      <img src="photo1.jpg">
+      <p>
+        They didn’t share a common language, yet their hearts somehow understood each other.
+        The boy found a true friend in her and offered a small gift (to his treasure),
+        knowing she wasn’t fond of such gestures.
+      </p>
+      <p>
+        It wasn’t a mistake—it was his way of saying thank you.
+        If the girl felt it wasn’t right for her, she had every right to reject it 😅
+      </p>
+    </div>
+
+    <div class="slide">
+      <img src="photo2.jpg">
+      <p>
+        A boy calls his girl the moon, wondering if he could ever reach her —
+        then the engineer inside him smiles and says,
+        no worries, I’ll build a rocket.
+      </p>
+      <p>
+        Funny right Maanuu 😄
+        Do you really think that this boy prioritise that girl
+        or is this just a fancy line to impress?
+      </p>
+    </div>
+
+    <div class="slide">
+      <img src="photo3.jpg">
+      <p>
+        When I shared this thought with the boy, he said:
+        “Why should I try to impress her?
+        I’m already impressed by her for no reason.”
+      </p>
+      <p>
+        He said it was her cuteness — her innocence, anger, pain, smile,
+        emotions, strictness, rejection, and acceptance.
+      </p>
+    </div>
+
+    <div class="slide">
+      <img src="photo4.jpg">
+      <p>
+        I asked, “Don’t you want her to love you?”
+      </p>
+      <p>
+        He replied,
+        “Pure love never forces anyone to love,
+        nor does it beg for it.”
+      </p>
+    </div>
+
+    <div class="slide">
+      <img src="photo5.jpg">
+      <p>
+        “Then what is the point of all this?”
+      </p>
+      <p>
+        He smiled and said,
+        “So that I never regret in the future
+        for having missed such a divine soul.”
+      </p>
+    </div>
+
+    <div class="slide">
+      <img src="photo6.jpg">
+      <p>
+        I was curious to know what would happen next…
+        but I woke up 😂
+      </p>
+      <p>
+        LEAVE THIS STORY HERE.
+        HOWEVER, PLEASE ACCEPT MY SMALL GIFT 🎁
+        from a wrong number.
+      </p>
+    </div>
+
+    <div class="hint">Swipe left or right →</div>
   </div>
+</div>
 
-  <script>
-    /* CHANGE PASSWORD HERE */
-    const PASSWORD = "oursecret";
+<script>
+const PASSWORD = "oursecret";
 
-    const slides = [
-      {
-        title: "Hi My Love",
-        text: "This is not just a website. It’s a small story about us."
-      },
-      {
-        title: "The First Thought",
-        text: "I still remember the moment I realized you were special to me."
-      },
-      {
-        title: "The Way You Are",
-        text: "Your smile, your kindness, the way you understand me — it all matters."
-      },
-      {
-        title: "What You Mean to Me",
-        text: "You make my ordinary days feel lighter and my hard days easier."
-      },
-      {
-        title: "Always You",
-        text: "No matter where life takes us, I want you right beside me."
-      }
-    ];
+function unlock() {
+  if (document.getElementById("password").value === PASSWORD) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("story").style.display = "flex";
+  } else {
+    document.getElementById("error").style.display = "block";
+  }
+}
 
-    let current = 0;
+let current = 0;
+const slides = document.querySelectorAll(".slide");
 
-    function unlock() {
-      const input = document.getElementById("password").value;
-      if (input === PASSWORD) {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("story").classList.remove("hidden");
-        loadSlide();
-      } else {
-        document.getElementById("error").style.display = "block";
-      }
-    }
+let startX = 0;
 
-    function loadSlide() {
-      document.getElementById("title").innerText = slides[current].title;
-      document.getElementById("text").innerText = slides[current].text;
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
 
-      if (current === slides.length - 1) {
-        document.getElementById("nextBtn").innerText = "❤️ The End";
-      }
-    }
-
-    function nextSlide() {
-      if (current < slides.length - 1) {
-        current++;
-        loadSlide();
-      }
-    }
-  </script>
+document.addEventListener("touchend", e => {
+  let diff = e.changedTouches[0].clientX - startX;
+  if (diff < -50 && current < slides.length - 1) {
+    slides[current].classList.remove("active");
+    current++;
+    slides[current].classList.add("active");
+  }
+  if (diff > 50 && current > 0) {
+    slides[current].classList.remove("active");
+    current--;
+    slides[current].classList.add("active");
+  }
+});
+</script>
 
 </body>
 </html>
