@@ -12,44 +12,44 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: white;
+  background: #0b1026;
 }
 
 /* ===== PASSWORD SCREEN ===== */
-.password-screen {
+#passwordOverlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(180deg, #0b1026, #1b2347);
+  background: #0b1026;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
-}
-.password-card {
-  background: rgba(255,255,255,.15);
-  backdrop-filter: blur(18px);
-  padding: 30px;
-  border-radius: 22px;
   text-align: center;
-  width: 90%;
-  max-width: 320px;
 }
-.password-card h2 { margin-bottom: 14px; font-weight: 500; }
-.password-card input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  font-size: 1rem;
+.pass-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.password-card button {
-  margin-top: 18px;
-  width: 100%;
+.pass-card input {
   padding: 12px;
-  border-radius: 18px;
+  border-radius: 8px;
   border: none;
-  background: white;
-  color: #111;
-  font-size: 1rem;
+  width: 100%;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.pass-card button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 8px;
+  border: none;
+  background: #f6d365;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 /* ===== INTRO ===== */
@@ -57,7 +57,7 @@ body {
   position: fixed;
   inset: 0;
   background: url("canva1.png") center/cover no-repeat;
-  display: flex;
+  display: none; /* Changed to none, JS will show it */
   align-items: center;
   justify-content: center;
 }
@@ -74,6 +74,8 @@ body {
   padding: 24px;
   max-width: 420px;
 }
+.intro-card h1 { font-weight: 500; margin-bottom: 12px; }
+.intro-card p { opacity: .9; line-height: 1.6; }
 .intro-card button {
   margin-top: 24px;
   padding: 12px 26px;
@@ -81,6 +83,7 @@ body {
   border: none;
   background: white;
   color: #111;
+  font-size: 1rem;
 }
 
 /* ===== STORY PAGE ===== */
@@ -101,6 +104,7 @@ body {
   background-size: 120px 120px, 200px 200px;
   background-position: 0 0, 60px 60px;
   opacity: .2;
+  pointer-events: none;
 }
 .overlay { padding: 28px 16px 40px; }
 h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
@@ -117,39 +121,46 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   border-radius: 18px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(14px);
+  box-shadow: 0 15px 30px rgba(0,0,0,.35);
   cursor: pointer;
 }
+.box h3 { margin: 0 0 6px; font-weight: 500; }
 .line {
   width: 40px;
   height: 2px;
   background: rgba(255,215,150,.8);
   margin-bottom: 12px;
 }
+.box p { opacity: .85; margin: 0; }
 
-/* Curious button */
 .curious-btn {
   margin-top: 40px;
   padding: 14px 32px;
   border-radius: 30px;
   border: none;
+  font-size: 1.05rem;
   background: linear-gradient(135deg, #f6d365, #fda085);
+  color: #1a1a1a;
+  cursor: pointer;
 }
 .curious-btn.disabled {
   opacity: .4;
   cursor: not-allowed;
+  background: linear-gradient(135deg, #999, #777);
 }
 
-/* ===== FULL STORY ===== */
+/* ===== FULL STORY OVERLAY ===== */
 .full {
   position: fixed;
   inset: 0;
   display: none;
-  z-index: 20;
+  z-index: 10;
 }
 .full-bg {
   position: absolute;
   inset: 0;
   background-size: cover;
+  background-position: center;
   filter: blur(4px);
 }
 .full-overlay {
@@ -161,18 +172,37 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   position: relative;
   max-width: 760px;
   margin: 40px auto;
-  padding: 28px;
+  padding: 28px 24px 40px;
   border-radius: 22px;
   background: rgba(10,12,25,.9);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 .close {
+  position: sticky;
+  top: 0;
   margin-left: auto;
   display: block;
-  background: white;
-  border-radius: 20px;
-  border: none;
   padding: 10px 18px;
+  border-radius: 22px;
+  border: none;
+  background: white;
+  color: #111;
+  cursor: pointer;
 }
+.full-card p {
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+.signature {
+  margin-top: 40px;
+  opacity: .8;
+  font-style: italic;
+  text-align: right;
+}
+
+.highlight-yellow { color: #FFD700; font-weight: 500; }
+.question-yellow { color: #FFD700; font-weight: 500; }
 
 /* ===== FINAL SHEET ===== */
 .final-sheet {
@@ -180,7 +210,8 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   inset: 0;
   display: none;
   background: #9b4a1f;
-  z-index: 30;
+  color: white;
+  z-index: 20;
 }
 .final-content {
   height: 100%;
@@ -188,147 +219,220 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   flex-direction: column;
   justify-content: center;
   padding: 32px;
+  text-align: center;
+}
+.final-content h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+.final-content .small { margin: 20px 0; font-size: 1.05rem; }
+.final-content .gift-btn {
+    padding: 15px 30px;
+    background: white;
+    color: #9b4a1f;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
-/* ===== POEM PAGE ===== */
-.poem-page {
+/* ===== LAST MEMORY PAGE (NEW) ===== */
+.last-page {
   position: fixed;
   inset: 0;
   display: none;
-  background: url("girl.jpg") center/cover no-repeat;
-  z-index: 40;
-}
-.poem-page::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-}
-.poem-content {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #000;
+  z-index: 30;
+  overflow-y: auto;
   text-align: center;
-  padding: 30px;
+  padding: 40px 20px;
 }
-.poem-content p {
-  max-width: 600px;
-  font-size: 1.2rem;
-  line-height: 1.8;
+.girl-image {
+  width: 280px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 150px 150px 20px 20px; /* Aesthetic curve */
+  border: 4px solid rgba(255,255,255,0.2);
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.poem-container {
+  max-width: 500px;
+  margin: 0 auto;
   font-style: italic;
+  line-height: 2;
+  color: #ffd700;
+  font-size: 1.1rem;
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 15px;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD -->
-<div class="password-screen" id="passwordScreen">
-  <div class="password-card">
-    <h2>Enter Password</h2>
-    <input type="password" id="passwordInput">
+<div id="passwordOverlay">
+  <div class="pass-card">
+    <h2>Enter Secret Key</h2>
+    <p>Only for Maanuu's eyes.</p>
+    <input type="password" id="passInput" placeholder="Password here...">
+    <br>
     <button onclick="checkPassword()">Unlock</button>
   </div>
 </div>
 
-<!-- INTRO -->
-<div class="intro" id="intro" style="display:none;">
+<div class="intro" id="intro">
   <div class="intro-card">
     <h1>Hey Maanuu 🤍</h1>
-    <p>Ek kahani sunegi kya?</p>
+    <p>
+      Ek kahani sunegi kya?<br>
+      Nothing dramatic.<br>
+      Just something I wanted to share.
+    </p>
     <button onclick="enterStory()">Continue</button>
   </div>
 </div>
 
-<!-- STORY PAGE -->
 <div class="story-page" id="storyPage">
   <div class="overlay">
     <h2>A Small Story 🤍</h2>
 
     <div class="container">
-      <div class="box" onclick="openStory(0)"><div class="line"></div>Beginning</div>
-      <div class="box" onclick="openStory(1)"><div class="line"></div>Moon Thought</div>
-      <div class="box" onclick="openStory(2)"><div class="line"></div>No Impressing</div>
+      <div class="box" onclick="openStory(0)">
+        <h3>The Beginning</h3><div class="line"></div>
+        <p>Two hearts, quietly understanding each other…</p>
+      </div>
+      <div class="box" onclick="openStory(1)">
+        <h3>The Moon Thought</h3><div class="line"></div>
+        <p>Is it poetry, or something honest?</p>
+      </div>
+      <div class="box" onclick="openStory(2)">
+        <h3>No Impressing</h3><div class="line"></div>
+        <p>Some feelings don’t need effort.</p>
+      </div>
     </div>
 
     <div style="text-align:center;">
-      <button id="curiousBtn" class="curious-btn disabled" disabled>Just curious??</button>
+      <button id="curiousBtn" class="curious-btn disabled" disabled>
+        Just curious??
+      </button>
     </div>
   </div>
 </div>
 
-<!-- FULL STORY -->
 <div class="full" id="full">
   <div class="full-bg" id="fullBg"></div>
   <div class="full-overlay"></div>
   <div class="full-card">
     <button class="close" onclick="closeStory()">Close</button>
     <div id="fullText"></div>
+    <div class="signature">— from a wrong number</div>
   </div>
 </div>
 
-<!-- FINAL -->
 <div class="final-sheet" id="finalSheet">
   <div class="final-content">
     <h1>THERE IS NO MORAL HERE</h1>
     <h1>IT WAS JUST A STORY</h1>
+
+    <div class="small">
+      and I was curious to know what will happen next but I woke up 😂
+    </div>
+
+    <div style="font-size: 1.2rem; font-weight: 700;">
+      LEAVE THIS STORY HERE<br>
+      HOWEVER PLEASE ACCEPT MY SMALL GIFT 🎁
+    </div>
+    
+    <button class="gift-btn" onclick="showLastPage()">Open Gift 💝</button>
+
+    <div style="margin-top: 20px; font-style: italic; opacity: 0.8;">from a wrong number</div>
   </div>
 </div>
 
-<!-- POEM -->
-<div class="poem-page" id="poemPage">
-  <div class="poem-content">
+<div class="last-page" id="lastPage">
+  <img src="girl_image.png" alt="Maanuu" class="girl-image">
+  
+  <div class="poem-container">
     <p>
-      She was never meant to be owned,<br>
-      only understood.<br><br>
-      Some souls walk with us,<br>
-      not to stay —<br>
-      but to remind us<br>
-      what purity feels like.
+      In a world of noise and passing faces,<br>
+      You’re the quiet light in empty spaces.<br>
+      Not a moon that stays so far away,<br>
+      But the warmth that helps me find my way.
     </p>
+    <p>
+      No fancy words, no grand design,<br>
+      Just glad to know your soul met mine.<br>
+      A "wrong number" or a twist of fate,<br>
+      Some things are simply worth the wait.
+    </p>
+    <p style="color:white; font-size: 0.9rem; margin-top: 20px;">— for you, Maanuu</p>
   </div>
 </div>
 
 <script>
-const PASSWORD = "maanuu";
-const stories = [
-  { bg:"manu.png", html:"<p>They didn’t share a common language...</p>" },
-  { bg:"chatgpt.png", html:"<p>He called her the moon...</p>" },
-  { bg:"canva2.png", html:"<p>Pure love never forces...</p>" }
-];
-const opened = new Set();
-
+// --- Password Logic ---
 function checkPassword() {
-  if (document.getElementById("passwordInput").value === PASSWORD) {
-    document.getElementById("passwordScreen").style.display = "none";
+  const pass = document.getElementById("passInput").value;
+  const correctPass = "1234"; // <--- CHANGE PASSWORD HERE
+
+  if (pass === correctPass) {
+    document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
-  } else alert("Wrong password");
+  } else {
+    alert("Incorrect password. Hint: Check the date or something common!");
+  }
 }
+
 function enterStory() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("storyPage").style.display = "block";
 }
-function openStory(i) {
+
+const stories = [
+  {
+    bg: "manu.png",
+    html: `<p>They didn’t share a common language, yet their hearts somehow understood each other...</p>`
+  },
+  {
+    bg: "chatgpt.png",
+    html: `<p>A boy calls his girl the moon... <span class="highlight-yellow">Funny right Maanuu</span></p>`
+  },
+  {
+    bg: "canva2.png",
+    html: `<p><span class="question-yellow">When I shared this thought with the boy, he said:</span></p>
+           <p>“Why should I try to impress her? I’m already impressed by her for no reason.”</p>`
+  }
+];
+
+const opened = new Set();
+
+function openStory(i){
   opened.add(i);
   document.getElementById("fullBg").style.backgroundImage = `url(${stories[i].bg})`;
   document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
   if (opened.size === 3) unlockCurious();
 }
-function closeStory() {
+
+function closeStory(){
   document.getElementById("full").style.display = "none";
 }
+
 function unlockCurious() {
   const btn = document.getElementById("curiousBtn");
   btn.disabled = false;
   btn.classList.remove("disabled");
   btn.onclick = openFinal;
 }
+
 function openFinal() {
   document.getElementById("finalSheet").style.display = "block";
-  setTimeout(()=>document.getElementById("poemPage").style.display="block",4000);
+}
+
+function showLastPage() {
+  document.getElementById("finalSheet").style.display = "none";
+  document.getElementById("lastPage").style.display = "block";
 }
 </script>
 
