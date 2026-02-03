@@ -30,9 +30,9 @@
     }
 
     h1 {
-      margin: 10px 0;
       color: #ff4f70;
       font-size: 2rem;
+      margin: 10px 0;
     }
 
     p {
@@ -41,17 +41,8 @@
       color: #333;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      border-radius: 30px;
-      border: 1px solid #ddd;
-      margin-top: 15px;
-    }
-
     button {
-      margin-top: 15px;
+      margin-top: 18px;
       width: 100%;
       padding: 14px;
       font-size: 1rem;
@@ -68,19 +59,13 @@
       display: none;
     }
 
-    .content {
+    .hidden {
       display: none;
     }
 
     .heart {
-      font-size: 3.5rem;
-      animation: pulse 1.3s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.25); }
-      100% { transform: scale(1); }
+      font-size: 3.2rem;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -89,39 +74,75 @@
   <!-- PASSWORD SCREEN -->
   <div class="card" id="login">
     <h1>Enter Password</h1>
-    <p>This page is just for you ❤️</p>
+    <p>This story is just for you ❤️</p>
 
-    <input type="password" id="password" placeholder="Password">
+    <input type="password" id="password" placeholder="Password"
+           style="width:100%;padding:14px;border-radius:30px;border:1px solid #ddd;">
     <button onclick="unlock()">Unlock</button>
     <div class="error" id="error">Wrong password</div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="card content" id="content">
+  <!-- STORY CARD -->
+  <div class="card hidden" id="story">
     <div class="heart">❤️</div>
-    <h1>Hey Love</h1>
-
-    <p>
-      I made this little website just for you.
-      Something simple you can open anytime.
-    </p>
-
-    <p>
-      You mean more to me than I can put into words.
-    </p>
+    <h1 id="title"></h1>
+    <p id="text"></p>
+    <button onclick="nextSlide()" id="nextBtn">Next</button>
   </div>
 
   <script>
     /* CHANGE PASSWORD HERE */
     const PASSWORD = "oursecret";
 
+    const slides = [
+      {
+        title: "Hi My Love",
+        text: "This is not just a website. It’s a small story about us."
+      },
+      {
+        title: "The First Thought",
+        text: "I still remember the moment I realized you were special to me."
+      },
+      {
+        title: "The Way You Are",
+        text: "Your smile, your kindness, the way you understand me — it all matters."
+      },
+      {
+        title: "What You Mean to Me",
+        text: "You make my ordinary days feel lighter and my hard days easier."
+      },
+      {
+        title: "Always You",
+        text: "No matter where life takes us, I want you right beside me."
+      }
+    ];
+
+    let current = 0;
+
     function unlock() {
       const input = document.getElementById("password").value;
       if (input === PASSWORD) {
         document.getElementById("login").style.display = "none";
-        document.getElementById("content").style.display = "block";
+        document.getElementById("story").classList.remove("hidden");
+        loadSlide();
       } else {
         document.getElementById("error").style.display = "block";
+      }
+    }
+
+    function loadSlide() {
+      document.getElementById("title").innerText = slides[current].title;
+      document.getElementById("text").innerText = slides[current].text;
+
+      if (current === slides.length - 1) {
+        document.getElementById("nextBtn").innerText = "❤️ The End";
+      }
+    }
+
+    function nextSlide() {
+      if (current < slides.length - 1) {
+        current++;
+        loadSlide();
       }
     }
   </script>
