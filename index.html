@@ -11,8 +11,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: url("bg.jpg") center/cover no-repeat fixed;
 }
 
@@ -22,24 +21,16 @@ body {
   background: rgba(0,0,0,.45);
 }
 
-/* ===== SLIDER ===== */
-.slider {
+.container {
   position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.track {
-  display: flex;
-  gap: 20px;
-  transition: transform .5s ease;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  z-index: 1;
 }
 
 .card {
-  width: 240px;
-  min-height: 340px;
   padding: 18px;
   border-radius: 18px;
   background: rgba(255,255,255,.18);
@@ -48,60 +39,42 @@ body {
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
   color: white;
   cursor: pointer;
-  transition: transform .35s ease, opacity .35s ease;
-  opacity: .6;
+  transition: transform .2s ease;
 }
 
-.card.active {
-  transform: scale(1.06);
-  opacity: 1;
+.card:active {
+  transform: scale(.98);
 }
 
 /* ===== FULL VIEW ===== */
 .full {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  background: rgba(0,0,0,.6);
   display: none;
-  background: rgba(0,0,0,.55);
+  z-index: 5;
 }
 
 .full-card {
   height: 100%;
-  width: 100%;
   padding: 22px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   color: white;
   overflow-y: auto;
-  animation: expand .4s ease;
 }
 
 .close {
   position: sticky;
   top: 0;
   float: right;
-  margin-bottom: 15px;
   padding: 10px 18px;
   border-radius: 22px;
   border: none;
   background: white;
   color: #333;
   font-size: 1rem;
-}
-
-@keyframes expand {
-  from { transform: scale(.9); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-@media (min-width: 700px) {
-  .full-card {
-    max-width: 800px;
-    margin: auto;
-    border-radius: 22px;
-  }
 }
 </style>
 </head>
@@ -110,40 +83,35 @@ body {
 
 <div class="overlay"></div>
 
-<div class="slider">
-  <div class="track" id="track">
+<div class="container">
 
-    <div class="card active" onclick="openCard(0)">
-      They didn’t share a common language, yet their hearts somehow understood each other…
-    </div>
-
-    <div class="card" onclick="openCard(1)">
-      A boy calls his girl the moon, wondering if he could ever reach her…
-    </div>
-
-    <div class="card" onclick="openCard(2)">
-      “Why should I try to impress her? I’m already impressed by her for no reason.”
-    </div>
-
-    <div class="card" onclick="openCard(3)">
-      “Pure love never forces anyone to love…”
-    </div>
-
+  <div class="card" onclick="openStory(0)">
+    They didn’t share a common language, yet their hearts somehow understood each other…
   </div>
+
+  <div class="card" onclick="openStory(1)">
+    A boy calls his girl the moon, wondering if he could ever reach her…
+  </div>
+
+  <div class="card" onclick="openStory(2)">
+    “Why should I try to impress her? I’m already impressed by her for no reason.”
+  </div>
+
+  <div class="card" onclick="openStory(3)">
+    “Pure love never forces anyone to love…”
+  </div>
+
 </div>
 
-<!-- FULL SCREEN -->
+<!-- FULL VIEW -->
 <div class="full" id="full">
   <div class="full-card">
-    <button class="close" onclick="closeCard()">Close</button>
+    <button class="close" onclick="closeStory()">Close</button>
     <div id="fullText"></div>
   </div>
 </div>
 
 <script>
-const cards = document.querySelectorAll(".card");
-const track = document.getElementById("track");
-
 const stories = [
 `They didn’t share a common language, yet their hearts somehow understood each other.
 The boy found a true friend in her and offered a small gift — not to impress,
@@ -164,18 +132,12 @@ Please accept my small gift 🎁
 from a wrong number.`
 ];
 
-function openCard(i) {
-  cards.forEach((c, idx) => c.classList.toggle("active", idx === i));
-
-  const offset = (window.innerWidth / 2) -
-    (cards[i].offsetLeft + cards[i].offsetWidth / 2);
-  track.style.transform = `translateX(${offset}px)`;
-
+function openStory(i) {
   document.getElementById("fullText").innerText = stories[i];
   document.getElementById("full").style.display = "block";
 }
 
-function closeCard() {
+function closeStory() {
   document.getElementById("full").style.display = "none";
 }
 </script>
