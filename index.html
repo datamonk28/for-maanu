@@ -16,26 +16,10 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== SHARED TEMPLATE STYLES ===== */
+/* ===== BACKGROUND & STARS ===== */
 .template-bg {
-  background: linear-gradient(45deg, #0b1026, #1b2347, #0b1026);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 30px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  background: radial-gradient(circle at center, #1b2347 0%, #0b1026 100%);
+  min-height: 100vh;
 }
 
 .star {
@@ -52,7 +36,7 @@ body {
   to { transform: translateY(-10vh); }
 }
 
-/* ===== 1. LOGIN SCREEN ===== */
+/* ===== 1. REDESIGNED LOGIN SCREEN ===== */
 #passwordOverlay {
   position: fixed;
   inset: 0;
@@ -61,41 +45,61 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background: radial-gradient(circle at center, #1b2347 0%, #0b1026 100%);
 }
 
 .pass-card {
-  padding: 40px 30px;
   width: 100%;
-  max-width: 350px;
+  max-width: 380px;
+  padding: 50px 35px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 40px;
   text-align: center;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  z-index: 9001;
 }
 
-.pass-card h2 { color: #ffd700; margin: 0 0 10px; }
+.pass-card h2 {
+  font-family: 'Georgia', serif;
+  font-size: 1.8rem;
+  color: #ffd700;
+  margin: 0 0 10px;
+}
 
 .pass-card input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 14px;
-  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 15px;
+  border-radius: 15px;
   width: 100%;
   color: white;
   text-align: center;
-  font-size: 1.2rem;
-  letter-spacing: 5px;
-  margin-top: 15px;
+  font-size: 1.3rem;
+  letter-spacing: 8px;
   outline: none;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.pass-card input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
 .pass-card button {
-  margin-top: 25px;
+  margin-top: 30px;
   width: 100%;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 16px;
+  border-radius: 15px;
   border: none;
   background: linear-gradient(135deg, #ffd700, #f6d365);
   color: #0b1026;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 /* ===== 2. INTRO & STORY GRID ===== */
@@ -110,7 +114,7 @@ body {
 }
 .intro::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
 
-.story-page { display: none; min-height: 100vh; padding: 60px 20px; }
+.story-page { display: none; min-height: 100vh; padding: 60px 20px; position: relative; }
 
 .container {
   max-width: 900px;
@@ -129,11 +133,10 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
 
 .line { width: 40px; height: 2px; background: #ffd700; margin-bottom: 12px; }
 
-/* ===== 3. STORY MODAL ===== */
+/* ===== 3. MODAL & FINAL SHEET ===== */
 .full { position: fixed; inset: 0; display: none; z-index: 2000; }
 .full-bg { position: absolute; inset: 0; background-size: cover; filter: blur(15px); }
 .full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); }
@@ -147,7 +150,6 @@ body {
   border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ===== 4. NO MORAL TRANSITION ===== */
 .final-sheet {
   position: fixed;
   inset: 0;
@@ -165,12 +167,12 @@ body {
   width: 85%;
   max-width: 400px;
   border-radius: 15px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
   text-align: center;
   transform: rotate(-1deg);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
-/* ===== 5. FINAL POEM PAGE ===== */
+/* ===== 4. FINAL POEM PAGE ===== */
 .last-page {
   position: fixed;
   inset: 0;
@@ -182,6 +184,10 @@ body {
 }
 
 .poem-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   max-width: 500px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -194,7 +200,6 @@ body {
   border-radius: 50%;
   border: 3px solid #ffd700;
   margin-bottom: 25px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .poem-container {
@@ -202,10 +207,9 @@ body {
   font-style: italic;
   line-height: 2.2;
   color: #f0e68c;
-  font-size: 1.1rem;
 }
 
-/* UI Controls */
+/* CONTROLS */
 .music-control {
   position: fixed;
   bottom: 20px; right: 20px; z-index: 9999;
@@ -220,7 +224,7 @@ body {
 }
 .curious-btn.disabled { opacity: 0.2; cursor: not-allowed; }
 
-.heart-flare { position: absolute; color: #ff4d4d; animation: heartFloat 2s ease-out forwards; pointer-events: none;}
+.heart-flare { position: absolute; color: #ff4d4d; animation: heartFloat 2s ease-out forwards; pointer-events: none; z-index: 10000;}
 @keyframes heartFloat { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100px); opacity: 0; } }
 </style>
 </head>
@@ -232,29 +236,28 @@ body {
 </audio>
 
 <button class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</button>
-
 <div id="starContainer"></div>
 
 <div id="passwordOverlay">
-  <div class="pass-card glass-card">
+  <div class="pass-card">
     <h2>Secret Key</h2>
     <p>Only for Maanuu's eyes 🤍</p>
-    <input type="password" id="passInput" placeholder="••••">
+    <input type="password" id="passInput" placeholder="••••" autofocus>
     <button onclick="checkPassword()">Unlock Story</button>
   </div>
 </div>
 
 <div class="intro" id="intro">
-  <div style="position:relative; z-index:1; text-align:center; padding: 20px;">
+  <div style="text-align:center; padding: 20px; position: relative; z-index: 1;">
     <h1>Hey Maanuu 🤍</h1>
     <p>Ek kahani sunegi kya?</p>
-    <button onclick="enterStory()" style="padding:12px 30px; border-radius:25px; border:none; cursor:pointer; font-weight:bold;">Continue</button>
+    <button onclick="enterStory()" style="padding:15px 40px; border-radius:30px; border:none; cursor:pointer; font-weight:bold;">Continue</button>
   </div>
 </div>
 
 <div class="story-page" id="storyPage">
   <div style="text-align:center; margin-bottom:40px;">
-    <h2 style="font-size: 2rem;">A Small Story 🤍</h2>
+    <h2 style="font-size: 2rem; color: #ffd700;">A Small Story 🤍</h2>
   </div>
   <div class="container">
     <div class="box" onclick="openStory(0)"><h3>The Beginning</h3><div class="line"></div><p>Two hearts, quietly understanding each other…</p></div>
@@ -270,7 +273,7 @@ body {
   <div class="full-bg" id="fullBg"></div>
   <div class="full-overlay"></div>
   <div class="full-card">
-    <button onclick="closeStory()" style="float:right; border:none; padding:8px 15px; border-radius:10px; cursor:pointer; background:white;">✕ Close</button>
+    <button onclick="closeStory()" style="float:right; border:none; padding:8px 15px; border-radius:10px; cursor:pointer; background:white; font-weight:bold;">✕ Close</button>
     <div id="fullText" style="margin-top:50px; line-height:1.8; color:white;"></div>
   </div>
 </div>
@@ -279,15 +282,12 @@ body {
   <div class="final-card-wrapper">
     <h1 style="margin:0; font-family:Georgia; color:#9b4a1f;">There is no moral here.</h1>
     <p style="color:#555; margin:20px 0;">It was just a story... <br> I was curious to know what happens next, but then I woke up. 😂</p>
-    <div style="border-top:1px dashed #ccc; padding-top:20px;">
-        <span style="font-weight:bold; color:#9b4a1f;">Wait, before you go... 🎁</span>
-    </div>
-    <button style="background:#9b4a1f; color:white; border:none; padding:15px 30px; border-radius:50px; margin-top:20px; cursor:pointer; font-weight:bold;" onclick="showLastPage()">Accept Small Gift 💝</button>
+    <button style="background:#9b4a1f; color:white; border:none; padding:15px 30px; border-radius:50px; cursor:pointer; font-weight:bold;" onclick="showLastPage()">Accept Small Gift 💝</button>
   </div>
 </div>
 
-<div class="last-page template-bg" id="lastPage">
-  <div class="poem-card glass-card" id="poemBox">
+<div class="last-page" id="lastPage">
+  <div class="poem-card" id="poemBox">
     <img src="myfavy.jpeg" alt="Maanuu" class="girl-image">
     <div class="poem-container">
       <p>हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।</p>
@@ -298,11 +298,11 @@ body {
       <div style="margin-top:30px; color:#ffd700; letter-spacing:2px; font-size:0.8rem;">— FOR MAANUU</div>
     </div>
   </div>
-  <button style="background:none; border:1px solid rgba(255,215,0,0.5); color:#ffd700; padding:10px 25px; border-radius:25px; cursor:pointer; margin-bottom:40px;" onclick="location.reload()">↺ Restart Story</button>
+  <button style="background:none; border:1px solid rgba(255,215,0,0.5); color:#ffd700; padding:10px 25px; border-radius:25px; cursor:pointer; margin: 40px 0;" onclick="location.reload()">↺ Restart</button>
 </div>
 
 <script>
-// Star Logic
+// Star Generation
 function createStars() {
   const container = document.getElementById('starContainer');
   for (let i = 0; i < 60; i++) {
@@ -313,27 +313,24 @@ function createStars() {
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
     star.style.animationDuration = (Math.random() * 8 + 5) + 's';
-    star.style.animationDelay = Math.random() * 5 + 's';
     container.appendChild(star);
   }
 }
 window.onload = createStars;
 
-// Auth
+// Password
 function checkPassword() {
-  if (document.getElementById("passInput").value === "1234") {
+  const input = document.getElementById("passInput").value;
+  if (input === "1234") {
     document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
   } else { alert("Not the magic word! ✨"); }
 }
 
-// Enter Story & Play Music
+// Start Story & Set Volume
 function enterStory() {
   const music = document.getElementById("bgMusic");
-  
-  // SET YOUR VOLUME HERE (0.3 = 30%)
-  music.volume = 0.3; 
-  
+  music.volume = 0.3; // 30% Volume
   music.play().catch(() => {});
   
   document.getElementById("musicBtn").style.display = "flex";
@@ -363,9 +360,7 @@ function openStory(i) {
   if (opened.size === 3) {
     const btn = document.getElementById("curiousBtn");
     btn.disabled = false; btn.classList.remove("disabled");
-    btn.onclick = () => {
-        document.getElementById("finalSheet").style.display = "flex";
-    };
+    btn.onclick = () => document.getElementById("finalSheet").style.display = "flex";
   }
 }
 
@@ -375,11 +370,11 @@ function showLastPage() {
   document.getElementById("lastPage").style.display = "block";
 }
 
-// Heart Effect
+// Interactive Hearts
 document.getElementById('poemBox').addEventListener('click', function(e) {
     const heart = document.createElement('div');
     heart.innerHTML = '❤️'; heart.className = 'heart-flare';
-    heart.style.left = e.pageX + 'px'; heart.style.top = e.pageY + 'px';
+    heart.style.left = (e.pageX - 10) + 'px'; heart.style.top = (e.pageY - 10) + 'px';
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 2000);
 });
