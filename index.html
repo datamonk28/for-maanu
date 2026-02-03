@@ -12,13 +12,29 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
-  background: url("photo-bg.jpg") center/cover no-repeat fixed;
   color: white;
+  background:
+    radial-gradient(circle at top, rgba(255,215,150,.12), transparent 40%),
+    linear-gradient(180deg, #0b1026, #1b2347);
+  overflow-x: hidden;
+}
+
+/* subtle golden stars */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(#ffd27d 1px, transparent 1px),
+    radial-gradient(#ffd27d 1px, transparent 1px);
+  background-size: 120px 120px, 200px 200px;
+  background-position: 0 0, 60px 60px;
+  opacity: .25;
+  pointer-events: none;
 }
 
 .overlay {
   min-height: 100vh;
-  background: rgba(0,0,0,.5);
   padding: 28px 16px 40px;
 }
 
@@ -41,15 +57,16 @@ h1 {
   padding: 22px;
   border-radius: 18px;
   background: rgba(255,255,255,.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
   cursor: pointer;
-  animation: rise .8s ease both;
+  transition: transform .25s ease, background .25s ease;
 }
 
 .box:hover {
   background: rgba(255,255,255,.24);
+  transform: translateY(-4px);
 }
 
 .box h3 {
@@ -60,33 +77,47 @@ h1 {
 .line {
   width: 40px;
   height: 2px;
-  background: rgba(255,255,255,.6);
+  background: rgba(255,215,150,.8);
   margin-bottom: 12px;
 }
 
 .box p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: .95rem;
+  opacity: .85;
   margin: 0;
 }
 
-/* full screen view */
+/* ===== FULL STORY VIEW ===== */
 .full {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.7);
   display: none;
   z-index: 10;
+  color: white;
+}
+
+.full-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px);
+  transform: scale(1.05);
+}
+
+.full-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
 }
 
 .full-card {
+  position: relative;
   height: 100%;
   padding: 28px 22px 40px;
-  background: rgba(255,255,255,.18);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
   overflow-y: auto;
-  animation: fadeUp .35s ease;
+  backdrop-filter: blur(10px);
+  animation: fadeUp .4s ease;
 }
 
 .close {
@@ -101,13 +132,25 @@ h1 {
   font-size: 1rem;
 }
 
-@keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+.full h2 {
+  margin-top: 30px;
+  font-weight: 500;
+}
+
+.full p {
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.signature {
+  margin-top: 40px;
+  opacity: .8;
+  font-style: italic;
+  text-align: right;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 </style>
@@ -153,48 +196,83 @@ h1 {
   </div>
 </div>
 
-<!-- FULL VIEW -->
+<!-- FULL STORY -->
 <div class="full" id="full">
+  <div class="full-bg" id="fullBg"></div>
+  <div class="full-overlay"></div>
+
   <div class="full-card">
     <button class="close" onclick="closeStory()">Close</button>
     <div id="fullText"></div>
-    <div style="margin-top:40px;opacity:.8;font-style:italic;text-align:right;">
-      — from a wrong number
-    </div>
+    <div class="signature">— from a wrong number</div>
   </div>
 </div>
 
 <script>
 const stories = [
-`They didn’t share a common language, yet their hearts somehow understood each other.
-The boy found a true friend in her and offered a small gift — not to impress,
-but to say thank you.
-If the girl felt it wasn’t right for her, she had every right to reject it 😅`,
-
-`A boy calls his girl the moon, wondering if he could ever reach her —
-then the engineer inside him smiles and says,
-no worries, I’ll build a rocket.
-Funny right Maanuu?`,
-
-`When asked why he would try to impress her, he replied:
-“Why should I?
-I’m already impressed by her for no reason.”`,
-
-`He admired her cuteness —
-her innocence, anger, pain, smile,
-emotions, strictness, rejection,
-and acceptance.`,
-
-`“Pure love never forces anyone to love,
-nor does it beg for it.
-This is just so I never regret
-missing such a divine soul.”
-
-Please accept my small gift 🎁`
+{
+  bg: "story1.jpg",
+  html: `
+  <h2>The Beginning</h2>
+  <p>
+  They didn’t share a common language, yet their hearts somehow understood each other.
+  The boy found a true friend in her and offered a small gift — not to impress,
+  but to say thank you.
+  If the girl felt it wasn’t right for her, she had every right to reject it 😅
+  </p>`
+},
+{
+  bg: "story2.jpg",
+  html: `
+  <h2>The Moon Thought</h2>
+  <p>
+  A boy calls his girl the moon, wondering if he could ever reach her —
+  then the engineer inside him smiles and says,
+  no worries, I’ll build a rocket.
+  Funny right Maanuu?
+  </p>`
+},
+{
+  bg: "story3.jpg",
+  html: `
+  <h2>No Impressing</h2>
+  <p>
+  “Why should I try to impress her? I’m already impressed by her for no reason.”
+  He admired her innocence, anger, pain, smile,
+  rejection, and acceptance.
+  </p>`
+},
+{
+  bg: "story4.jpg",
+  html: `
+  <h2>What He Admired</h2>
+  <p>
+  He admired her cuteness —
+  her innocence, anger, pain, smile,
+  emotions, strictness, rejection,
+  and acceptance.
+  </p>`
+},
+{
+  bg: "story5.jpg",
+  html: `
+  <h2>Leaving It Here</h2>
+  <p>
+  “Pure love never forces anyone to love,
+  nor does it beg for it.
+  This is just so I never regret
+  missing such a divine soul.”
+  </p>
+  <p>
+  Please accept my small gift 🎁
+  </p>`
+}
 ];
 
 function openStory(i) {
-  document.getElementById("fullText").innerText = stories[i];
+  document.getElementById("fullBg").style.backgroundImage =
+    `url(${stories[i].bg})`;
+  document.getElementById("fullText").innerHTML = stories[i].html;
   document.getElementById("full").style.display = "block";
 }
 
