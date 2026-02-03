@@ -6,6 +6,51 @@ Code
 <meta charset="UTF-8">
 <title>A Small Story 🤍</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+/* ===== PASSWORD SCREEN ===== */
+.password-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #0b1026, #1b2347);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.password-card {
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(16px);
+  padding: 28px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 320px;
+}
+
+.password-card h2 {
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.password-card input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.password-card button {
+  margin-top: 18px;
+  padding: 12px;
+  width: 100%;
+  border-radius: 18px;
+  border: none;
+  background: white;
+  color: #111;
+  font-size: 1rem;
+}
 
 <style>
 * { box-sizing: border-box; }
@@ -15,6 +60,16 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: white;
 }
+
+<!-- PASSWORD -->
+<div class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+</div>
+
 
 /* ===== INTRO ===== */
 .intro {
@@ -210,6 +265,40 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   font-style: italic;
 }
 </style>
+/* ===== POEM FINAL PAGE ===== */
+.poem-page {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: url("girl.jpg") center/cover no-repeat;
+  z-index: 30;
+}
+
+.poem-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+}
+
+.poem-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+}
+
+.poem-content p {
+  max-width: 600px;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+
 </head>
 
 <body>
@@ -267,6 +356,22 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
 </div>
 
 <!-- FINAL SHEET -->
+<!-- POEM PAGE -->
+<div class="poem-page" id="poemPage">
+  <div class="poem-content">
+    <p>
+      She was never meant to be owned,<br>
+      only understood.<br><br>
+
+      Some souls walk with us,<br>
+      not to stay —<br>
+      but to remind us<br>
+      what purity feels like.
+    </p>
+  </div>
+</div>
+
+  
 <div class="final-sheet" id="finalSheet">
   <div class="final-content">
     <h1>THERE IS NO MORAL HERE</h1>
@@ -286,6 +391,18 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
 </div>
 
 <script>
+const PASSWORD = "maanuu"; // 🔐 change this
+
+function checkPassword() {
+  const input = document.getElementById("passwordInput").value;
+  if (input === PASSWORD) {
+    document.getElementById("passwordScreen").style.display = "none";
+  } else {
+    alert("Wrong password");
+  }
+}
+
+  
 function enterStory() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("storyPage").style.display = "block";
@@ -383,7 +500,13 @@ function unlockCurious() {
 
 function openFinal() {
   document.getElementById("finalSheet").style.display = "block";
+
+  // auto-open poem page after few seconds
+  setTimeout(() => {
+    document.getElementById("poemPage").style.display = "block";
+  }, 4000);
 }
+
 </script>
 
 </body>
