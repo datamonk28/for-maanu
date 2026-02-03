@@ -16,14 +16,14 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== PASSWORD SCREEN (NEW DESIGN) ===== */
+/* ===== PASSWORD SCREEN (ENHANCED) ===== */
 #passwordOverlay {
   position: fixed;
   inset: 0;
   background: linear-gradient(45deg, #0b1026, #1b2347, #0b1026);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@ body {
 }
 
 @keyframes float {
-  from { transform: translateY(100vh); }
+  from { transform: translateY(105vh); }
   to { transform: translateY(-10vh); }
 }
 
@@ -64,7 +64,7 @@ body {
   max-width: 350px;
   text-align: center;
   animation: fadeInScale 0.8s ease-out;
-  z-index: 101;
+  z-index: 1001;
 }
 
 @keyframes fadeInScale {
@@ -80,12 +80,6 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.pass-card p {
-  font-size: 0.95rem;
-  opacity: 0.8;
-  margin-bottom: 25px;
-}
-
 .pass-card input {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -98,10 +92,10 @@ body {
   outline: none;
   transition: all 0.3s;
   letter-spacing: 5px;
+  margin-top: 10px;
 }
 
 .pass-card input:focus {
-  background: rgba(255, 255, 255, 0.15);
   border-color: #ffd700;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
@@ -117,13 +111,7 @@ body {
   cursor: pointer;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
   transition: all 0.3s;
-}
-
-.pass-card button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
 }
 
 /* ===== INTRO ===== */
@@ -134,96 +122,113 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 50;
+  z-index: 500;
 }
 .intro::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,0.5);
 }
-.intro-card {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 24px;
-  max-width: 420px;
-}
-.intro-card button {
-  margin-top: 24px;
-  padding: 12px 30px;
-  border-radius: 24px;
-  border: none;
-  background: white;
-  color: #111;
-  font-weight: 600;
-  cursor: pointer;
-}
+.intro-card { position: relative; z-index: 1; text-align: center; padding: 24px; }
 
 /* ===== STORY PAGE ===== */
 .story-page {
   display: none;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(255,215,150,.12), transparent 40%), #0b1026;
+  background: radial-gradient(circle at top, rgba(255,215,150,.1), transparent 40%), #0b1026;
 }
-.overlay { padding: 40px 16px; }
-h2 { text-align: center; font-weight: 500; margin-bottom: 30px; }
-
 .container {
   max-width: 900px;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+  padding: 20px;
 }
 .box {
   padding: 25px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: 0.3s;
 }
-.box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.12); }
+.box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
 .line { width: 40px; height: 2px; background: #ffd700; margin-bottom: 12px; }
 
-.curious-btn {
-  margin-top: 50px;
-  padding: 16px 40px;
-  border-radius: 30px;
-  border: none;
-  font-weight: 600;
-  background: linear-gradient(135deg, #f6d365, #fda085);
-  color: #1a1a1a;
-  cursor: pointer;
-}
-.curious-btn.disabled { opacity: .3; cursor: not-allowed; filter: grayscale(1); }
-
-/* ===== FULL STORY OVERLAY ===== */
-.full { position: fixed; inset: 0; display: none; z-index: 200; }
-.full-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(8px); }
-.full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); }
+/* ===== FULL STORY MODAL ===== */
+.full { position: fixed; inset: 0; display: none; z-index: 2000; }
+.full-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(10px); }
+.full-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.75); }
 .full-card {
   position: relative;
   max-width: 600px;
-  margin: 5vh auto;
-  padding: 30px;
+  margin: 10vh auto;
+  padding: 40px 30px;
   border-radius: 25px;
   background: rgba(15, 20, 40, 0.95);
-  max-height: 85vh;
+  max-height: 80vh;
   overflow-y: auto;
   border: 1px solid rgba(255,255,255,0.1);
 }
-.close { float: right; padding: 8px 16px; border-radius: 15px; border: none; background: white; cursor: pointer; }
 
-/* ===== FINAL SHEET & LAST PAGE ===== */
-.final-sheet { position: fixed; inset: 0; display: none; background: #9b4a1f; z-index: 300; }
-.final-content { height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 30px; text-align: center; }
-.last-page { position: fixed; inset: 0; display: none; background: #000; z-index: 400; overflow-y: auto; padding: 50px 20px; text-align: center; }
-.girl-image { width: 260px; height: 360px; object-fit: cover; border-radius: 130px 130px 20px 20px; border: 3px solid #ffd700; margin-bottom: 30px; }
-.poem-container { max-width: 500px; margin: 0 auto; line-height: 2; color: #ffd700; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; }
+/* ===== FINAL POEM PAGE (CINEMATIC) ===== */
+.last-page {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+  z-index: 3000;
+  overflow-y: auto;
+  text-align: center;
+  padding: 60px 20px;
+}
+.girl-image {
+  width: 280px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 150px 150px 30px 30px; 
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  margin-bottom: 40px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+}
+.poem-container {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  line-height: 2.2;
+  color: #f0e68c;
+  padding: 40px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 25px;
+  position: relative;
+}
+.replay-btn {
+  margin: 40px auto;
+  padding: 12px 25px;
+  background: transparent;
+  color: #ffd700;
+  border: 1px solid #ffd700;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.heart-flare {
+  position: absolute;
+  color: #ff4d4d;
+  animation: heartFloat 3s ease-out forwards;
+}
+@keyframes heartFloat {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
 
+/* Misc Utilities */
+.curious-btn { padding: 16px 40px; border-radius: 30px; border: none; background: linear-gradient(135deg, #f6d365, #fda085); cursor: pointer; margin-top: 30px;}
+.curious-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+.final-sheet { position: fixed; inset: 0; display: none; background: #9b4a1f; z-index: 2500; text-align: center; padding-top: 20%; }
 </style>
 </head>
 
@@ -242,30 +247,19 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 30px; }
   <div class="intro-card">
     <h1>Hey Maanuu 🤍</h1>
     <p>Ek kahani sunegi kya?<br>Nothing dramatic. Just something I wanted to share.</p>
-    <button onclick="enterStory()">Continue</button>
+    <button onclick="enterStory()" style="padding:12px 30px; border-radius:20px; border:none; cursor:pointer;">Continue</button>
   </div>
 </div>
 
 <div class="story-page" id="storyPage">
-  <div class="overlay">
+  <div style="padding-top: 50px; text-align:center;">
     <h2>A Small Story 🤍</h2>
     <div class="container">
-      <div class="box" onclick="openStory(0)">
-        <h3>The Beginning</h3><div class="line"></div>
-        <p>Two hearts, quietly understanding each other…</p>
-      </div>
-      <div class="box" onclick="openStory(1)">
-        <h3>The Moon Thought</h3><div class="line"></div>
-        <p>Is it poetry, or something honest?</p>
-      </div>
-      <div class="box" onclick="openStory(2)">
-        <h3>No Impressing</h3><div class="line"></div>
-        <p>Some feelings don’t need effort.</p>
-      </div>
+      <div class="box" onclick="openStory(0)"><h3>The Beginning</h3><div class="line"></div><p>Two hearts, quietly understanding each other…</p></div>
+      <div class="box" onclick="openStory(1)"><h3>The Moon Thought</h3><div class="line"></div><p>Is it poetry, or something honest?</p></div>
+      <div class="box" onclick="openStory(2)"><h3>No Impressing</h3><div class="line"></div><p>Some feelings don’t need effort.</p></div>
     </div>
-    <div style="text-align:center;">
-      <button id="curiousBtn" class="curious-btn disabled" disabled>Just curious??</button>
-    </div>
+    <button id="curiousBtn" class="curious-btn disabled" disabled>Just curious??</button>
   </div>
 </div>
 
@@ -273,35 +267,32 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 30px; }
   <div class="full-bg" id="fullBg"></div>
   <div class="full-overlay"></div>
   <div class="full-card">
-    <button class="close" onclick="closeStory()">✕ Close</button>
-    <div id="fullText" style="margin-top:40px;"></div>
-    <div style="margin-top:30px; opacity:0.6; font-style:italic; text-align:right;">— from a wrong number</div>
+    <button onclick="closeStory()" style="float:right; border:none; background:white; padding:5px 15px; border-radius:10px; cursor:pointer;">✕ Close</button>
+    <div id="fullText" style="margin-top:50px; line-height:1.8;"></div>
   </div>
 </div>
 
 <div class="final-sheet" id="finalSheet">
-  <div class="final-content">
-    <h1 style="font-size:2rem;">THERE IS NO MORAL</h1>
-    <p>...and I was curious to know what happens next but I woke up 😂</p>
-    <p style="font-weight:bold; margin: 20px 0;">PLEASE ACCEPT MY SMALL GIFT 🎁</p>
-    <button style="padding:15px 30px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;" onclick="showLastPage()">Thank You Kutty! 💝</button>
-  </div>
+    <h1>THERE IS NO MORAL HERE</h1>
+    <p>I was curious to know what happens next but I woke up 😂</p>
+    <button onclick="showLastPage()" style="padding:15px 30px; border-radius:30px; border:none; font-weight:bold; cursor:pointer; margin-top:20px;">Thank You Kutty! 💝</button>
 </div>
 
 <div class="last-page" id="lastPage">
   <img src="myfavy.jpeg" alt="Maanuu" class="girl-image">
-  <div class="poem-container">
+  <div class="poem-container" id="poemBox">
     <p>हुस्न-ए-बेमिसाल नहीं, फिर भी दिल में इक शोर रहा करे,<br>परियों-सी कोई अदा नहीं, पर ज़हन में तेरा ज़ोर रहा करे।</p>
     <p>तू मेरी दुनिया की वो ख़ामोश, सबसे हसीं दुआ हुई,<br>लबों पे नाम न आ सका, मगर असर में तू सदा रहा करे।</p>
     <p>नसीब में नहीं वो सितारा, जो ख़्वाबों की मंज़िल था कभी,<br>चुन ली ज़मीं की राहत मैंने, अब सर झुका-झुका रहा करे।</p>
     <p>हसरत भरी इन आँखों से तुझे तकना है इबादत मेरी,<br>जैसे कोई मासूम बच्चा, किसी चाँद की ओर रहा करे।</p>
     <p>ख़्वाहिश ने कभी कुछ माँगा नहीं, बस दीदार ही मंज़ूर है,<br>तुझे दूर से ही देखते रहना, मेरी मुकम्मल वफ़ा रहा करे।</p>
-    <p style="color:white; font-size: 0.9rem; margin-top: 20px; opacity:0.8;">— for you, Maanuu</p>
+    <div style="margin-top:30px; opacity:0.5; font-size:0.9rem;">— for you, Maanuu</div>
   </div>
+  <button class="replay-btn" onclick="restartStory()">↺ Read Again</button>
 </div>
 
 <script>
-// --- Star Background Logic ---
+// Stars Logic
 function createStars() {
   const container = document.getElementById('passwordOverlay');
   for (let i = 0; i < 50; i++) {
@@ -318,15 +309,12 @@ function createStars() {
 }
 window.onload = createStars;
 
-// --- Password Logic ---
+// Auth Logic
 function checkPassword() {
-  const pass = document.getElementById("passInput").value;
-  if (pass === "1234") { // <--- YOUR PASSWORD
+  if (document.getElementById("passInput").value === "1234") {
     document.getElementById("passwordOverlay").style.display = "none";
     document.getElementById("intro").style.display = "flex";
-  } else {
-    alert("Oops! Not that one. Try again! ✨");
-  }
+  } else { alert("Oops! Try again. ✨"); }
 }
 
 function enterStory() {
@@ -334,14 +322,15 @@ function enterStory() {
   document.getElementById("storyPage").style.display = "block";
 }
 
+// Story Logic
 const stories = [
-  { bg: "manu.png", html: `<p>They didn’t share a common language, yet their hearts understood each other. The boy offered a small gift, knowing she wasn’t fond of gestures. It was his way of saying thank you.</p>` },
-  { bg: "chatgpt.png", html: `<p>A boy calls his girl the moon, wondering if he could ever reach her. The engineer inside him smiles and says: "No worries, I'll build a rocket." <br><br> <span style="color:#ffd700">Funny right?</span></p>` },
-  { bg: "canva2.jpg", html: `<p>I asked him, "Don't you want her to love you?"<br><br>He replied, "Pure love never forces anyone. I just don't want to regret missing such a divine soul."</p>` }
+  { bg: "manu.png", html: "<p>They didn’t share a common language, yet their hearts understood each other. The boy offered a small gift as a way of saying thank you.</p>" },
+  { bg: "chatgpt.png", html: "<p>A boy calls his girl the moon... the engineer inside him says: 'No worries, I'll build a rocket.' <br><br><b>Funny right Maanuu?</b></p>" },
+  { bg: "canva2.jpg", html: "<p>He said, 'Why should I try to impress her? I’m already impressed by her for no reason.' Pure love never forces anyone.</p>" }
 ];
 
 const opened = new Set();
-function openStory(i){
+function openStory(i) {
   opened.add(i);
   document.getElementById("fullBg").style.backgroundImage = `url(${stories[i].bg})`;
   document.getElementById("fullText").innerHTML = stories[i].html;
@@ -353,11 +342,27 @@ function openStory(i){
   }
 }
 
-function closeStory(){ document.getElementById("full").style.display = "none"; }
+function closeStory() { document.getElementById("full").style.display = "none"; }
 function showLastPage() {
   document.getElementById("finalSheet").style.display = "none";
   document.getElementById("lastPage").style.display = "block";
 }
+
+function restartStory() {
+  opened.clear();
+  document.getElementById("curiousBtn").classList.add("disabled");
+  document.getElementById("lastPage").style.display = "none";
+  document.getElementById("intro").style.display = "flex";
+}
+
+// Heart Click Effect
+document.getElementById('poemBox').addEventListener('click', function(e) {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️'; heart.className = 'heart-flare';
+    heart.style.left = e.pageX + 'px'; heart.style.top = e.pageY + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 2000);
+});
 </script>
 
 </body>
