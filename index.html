@@ -11,115 +11,162 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  min-height: 100vh;
-  background: url("photo-bg.jpg") center/cover no-repeat fixed;
-  color: white;
+  height: 100vh;
+  overflow: hidden;
+  background: url("bg.jpg") center/cover no-repeat fixed;
 }
 
 .overlay {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
   background: rgba(0,0,0,.45);
-  padding: 24px 16px 40px;
 }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+/* ===== FLOATING STAGE ===== */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
-.box {
-  padding: 20px;
+.story-box {
+  position: absolute;
+  width: 280px;
+  padding: 18px;
   border-radius: 18px;
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 15px 30px rgba(0,0,0,.35);
-  animation: rise .8s ease both;
+  color: white;
+  font-size: .95rem;
+  line-height: 1.5;
+  cursor: pointer;
+  animation: float 14s linear infinite;
 }
 
-.box:nth-child(1) { animation-delay: .1s; }
-.box:nth-child(2) { animation-delay: .25s; }
-.box:nth-child(3) { animation-delay: .4s; }
-.box:nth-child(4) { animation-delay: .55s; }
-.box:nth-child(5) { animation-delay: .7s; }
+/* stagger animation */
+.story-box:nth-child(1) { animation-delay: 0s; }
+.story-box:nth-child(2) { animation-delay: 3s; }
+.story-box:nth-child(3) { animation-delay: 6s; }
+.story-box:nth-child(4) { animation-delay: 9s; }
 
-h1 {
-  text-align: center;
-  margin-bottom: 22px;
+@keyframes float {
+  0%   { transform: translate(-350px, 65vh); opacity: 0; }
+  15%  { opacity: 1; }
+  50%  { transform: translate(50vw, 20vh); }
+  85%  { opacity: 1; }
+  100% { transform: translate(110vw, 65vh); opacity: 0; }
 }
 
-p {
+/* ===== FULL PAGE VIEW ===== */
+.full {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.65);
+  animation: fadeIn .4s ease;
+}
+
+.full-card {
+  max-width: 800px;
+  width: 90%;
+  padding: 28px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: white;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  animation: zoom .45s ease;
+}
+
+.close {
+  margin-top: 20px;
+  padding: 12px 26px;
+  border-radius: 30px;
+  border: none;
+  background: white;
+  color: #333;
   font-size: 1rem;
-  line-height: 1.6;
-  margin: 0;
 }
 
-@keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes zoom {
+  from { transform: scale(.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay">
-  <h1>A Small Story 🤍</h1>
+<div class="overlay"></div>
 
-  <div class="container">
+<div class="stage">
 
-    <div class="box">
-      <p>
-        They didn’t share a common language, yet their hearts somehow understood each other.
-        The boy found a true friend in her and offered a small gift — not to impress,
-        but to say thank you.
-        If the girl felt it wasn’t right for her, she had every right to reject it 😅
-      </p>
-    </div>
+  <div class="story-box" onclick="openStory(0)">
+    They didn’t share a common language, yet their hearts somehow understood each other…
+  </div>
 
-    <div class="box">
-      <p>
-        A boy calls his girl the moon, wondering if he could ever reach her —
-        then the engineer inside him smiles and says,
-        no worries, I’ll build a rocket.
-        Funny right Maanuu?
-      </p>
-    </div>
+  <div class="story-box" onclick="openStory(1)">
+    A boy calls his girl the moon, wondering if he could ever reach her…
+  </div>
 
-    <div class="box">
-      <p>
-        When asked why he would try to impress her, he replied:
-        “Why should I?
-        I’m already impressed by her for no reason.”
-      </p>
-    </div>
+  <div class="story-box" onclick="openStory(2)">
+    “Why should I try to impress her? I’m already impressed by her for no reason.”
+  </div>
 
-    <div class="box">
-      <p>
-        He admired her cuteness —
-        her innocence, anger, pain, smile,
-        emotions, strictness, rejection,
-        and acceptance.
-      </p>
-    </div>
+  <div class="story-box" onclick="openStory(3)">
+    “Pure love never forces anyone to love…”
+  </div>
 
-    <div class="box">
-      <p>
-        “Pure love never forces anyone to love,
-        nor does it beg for it.
-        This is just so I never regret
-        missing such a divine soul.”
-        <br><br>
-        Please accept my small gift 🎁
-        from a wrong number.
-      </p>
-    </div>
+</div>
 
+<!-- FULL PAGE -->
+<div class="full" id="full">
+  <div class="full-card">
+    <div id="fullText"></div>
+    <button class="close" onclick="closeStory()">Close</button>
   </div>
 </div>
+
+<script>
+const stories = [
+`They didn’t share a common language, yet their hearts somehow understood each other.
+The boy found a true friend in her and offered a small gift — not to impress, but to say thank you.
+If the girl felt it wasn’t right for her, she had every right to reject it 😅`,
+
+`A boy calls his girl the moon, wondering if he could ever reach her —
+then the engineer inside him smiles and says, no worries, I’ll build a rocket.
+Funny right, Maanuu?`,
+
+`“Why should I try to impress her? I’m already impressed by her for no reason.”
+He admired her innocence, anger, pain, smile, rejection, and acceptance.`,
+
+`“Pure love never forces anyone to love, nor does it beg for it.
+This was just so I never regret missing such a divine soul.”
+Please accept my small gift 🎁
+from a wrong number.`
+];
+
+function openStory(i) {
+  document.getElementById("fullText").innerText = stories[i];
+  document.getElementById("full").style.display = "flex";
+}
+
+function closeStory() {
+  document.getElementById("full").style.display = "none";
+}
+</script>
 
 </body>
 </html>
