@@ -1,3 +1,5 @@
+Code
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,6 +163,18 @@ h2 { text-align: center; font-weight: 500; margin-bottom: 26px; }
   text-align: right;
 }
 
+.highlight-yellow {
+  color: #FFD700; /* soft yellow */
+  font-weight: 500;
+}
+
+.question-yellow {
+  color: #FFD700;
+  font-weight: 500;
+}
+
+
+
 /* ===== FINAL SHEET ===== */
 .final-sheet {
   position: fixed;
@@ -278,10 +292,45 @@ function enterStory() {
 }
 
 const stories = [
-  { bg:"story1.jpg", html:"<p>They didn’t share a common language, yet their hearts somehow understood each other...</p>" },
-  { bg:"story2.jpg", html:"<p>A boy calls his girl the moon, wondering if he could ever reach her...</p>" },
-  { bg:"story3.jpg", html:"<p>Pure love never forces anyone to love, nor does it beg for it.</p>" }
-];
+  { bg:"story1.jpg", html:"<p>They didn’t share a common language, yet their hearts somehow understood each other. The boy found a true friend in her and offered a small gift (to his treasure), knowing she wasn’t fond of such gestures. It wasn’t a mistake—it was his way of saying thank you. If the girl felt it wasn’t right for her, she had every right to reject it 😅 </p>" },
+  {
+  bg: "story2.jpg",
+  html: `
+    <p>
+      A boy calls his girl the moon, wondering if he could ever reach her — then the engineer inside him smiles and says, no worries, I’ll build a rocket.
+    </p>
+
+    <p>
+      <span class="highlight-yellow">Funny right Maanuu</span>
+    </p>
+
+    <p>
+      Do you really think that this boy prioritise that girl or is this just an fancy line to impress?
+    </p>
+  `
+}
+
+{
+  bg: "story3.jpg",
+  html: `
+    <p>When I shared this thought with the boy, he said:</p>
+
+    <p>“Why should I try to impress her?</p>
+    <p><span class="question-yellow">I’m already impressed by her for no reason.”</span></p>
+
+    <p>I checked with him what did you like?</p>
+
+    <p>He laughed and said it was her cuteness — how it shows in her innocence, her anger, her pain, her smile, her emotions, her strictness, her rejection, and her acceptance.</p>
+
+    <p><span class="question-yellow">I asked again, “Don’t you want her to love you?”</span></p>
+
+    <p>He replied, “Pure love never forces anyone to love, nor does it beg for it.”</p>
+
+    <p><span class="question-yellow">So I asked, “Then what is the point of all this?”</span></p>
+
+    <p>He smiled gently and said, “So that I never regret in the future for having missed such a divine soul.”</p>
+  `
+};
 
 const opened = new Set();
 
